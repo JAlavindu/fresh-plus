@@ -12,7 +12,7 @@ const list = ({url}) => {
   const fetchList = async () => {
 
     //should be updated
-    const response = await axios.get(`${url}/api/food/list`)
+    const response = await axios.get(`${url}/api/product/list`)
     if(response.data.success){
       setList(response.data.data)
     }
@@ -22,8 +22,9 @@ const list = ({url}) => {
   }
 
   const removeProduct = async (productId) => {
-    //should be updated
-    const response = await axios.post(`${url}/api/food/remove/${id}`)
+
+    
+    const response = await axios.post(`${url}/api/product/remove/`,{id:productId})
     if(response.data.success){
       fetchList();
       toast.success(response.data.message);

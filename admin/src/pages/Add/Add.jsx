@@ -24,7 +24,7 @@ const add = ({url}) => {
 
     const onSubmitHandler = async (event) => {
         event.preventDefault();
-        console.log(data);
+       
 
         const formData = new FormData();
         formData.append('name', data.name);
@@ -33,9 +33,9 @@ const add = ({url}) => {
         formData.append('price',Number( data.price));
         formData.append('image', image);
 
-        //should be updated (url and api end point)
-        /*const responce = await axios.post(`${url}/api/food/add`, formData);
-        if(responce.data.success) {
+        
+        const response = await axios.post(`${url}/api/product/add`, formData);
+        if(response.data.success) {
             setData({
                 name:"",
                 description:"",
@@ -43,11 +43,11 @@ const add = ({url}) => {
                 price:""        
             })
             setImage(false);
-            toast.success(responce.data.message);
+            toast.success(response.data.message);
 
         }else{
-            toast.error(responce.data.message);
-        }*/
+            toast.error(response.data.message);
+        }
     }
 
 
