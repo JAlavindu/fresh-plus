@@ -12,8 +12,7 @@ import 'react-toastify/dist/ReactToastify.css';
 
 const App = () => {
 
-  //backend url should be updated
-  const url = "http://localhost:"
+  const url = "http://localhost:4000"
 
   return (
     <>
