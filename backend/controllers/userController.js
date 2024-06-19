@@ -2,6 +2,7 @@ import userModel from "../models/userModel.js";
 import jwt from "jsonwebtoken"
 import bcrypt from "bcrypt"
 import validator from "validator"
+import mongoose from "mongoose";
 
 // Login user
 const loginUser = async (req, res) => {
@@ -71,4 +72,50 @@ const registerUser = async (req, res) => {
     }
 }
 
-export {loginUser, registerUser}
+// get user name
+
+
+
+const userName = async (req, res) => {
+    try {
+        // Log the request body for debugging
+        console.log('Request body:', req.body);
+
+        // Extract userId from the request body
+        const { userId } = req.body;
+
+        // Ensure userId is present
+        if (!userId) {
+            return res.status(400).json({ success: false, message: "userId is required" });
+        }
+
+        // Log the extracted userId
+        console.log('Extracted userId:', userId);
+
+        // Check if userId is a valid ObjectId
+        if (!mongoose.isValidObjectId(userId)) {
+            return res.status(400).json({ success: false, message: "Invalid userId format" });
+        }
+
+        // Perform the database query using _id
+        const user = await userModel.findOne({ _id: userId });
+
+        // Log the query result
+        console.log('Query result:', user);
+
+        // Handle case when user is not found
+        if (!user) {
+            return res.status(404).json({ success: false, message: "User not found" });
+        }
+
+        // Return only the name
+        return res.json({ success: true, data: { name: user.name } });
+
+    } catch (error) {
+        console.error('Error:', error);
+        return res.status(500).json({ success: false, message: "Internal Server Error" });
+    }
+}
+
+
+export {loginUser, registerUser, userName}
