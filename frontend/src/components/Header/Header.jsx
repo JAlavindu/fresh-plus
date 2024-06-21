@@ -3,10 +3,12 @@ import "./Header.css";
 import { assets } from "../../assets/assets";
 import { StoreContext } from "../../context/StoreContext";
 import axios from "axios";
+import { useNavigate } from "react-router-dom";
 
-const Header = ({ setShowLogin }) => {
+const Header = ({ setShowLogin, setUserName }) => {
   const { url, token, setToken } = useContext(StoreContext);
   const [user, setUser] = useState("");
+  const navigate = useNavigate();
 
   // API call
   const fetchUserName = async () => {
@@ -19,6 +21,7 @@ const Header = ({ setShowLogin }) => {
     );
 
     setUser(response.data.data.name);
+    setUserName(response.data.data.name);
     // console.log(response.data.data.name);
   };
 
@@ -31,22 +34,27 @@ const Header = ({ setShowLogin }) => {
   return (
     <div className="header">
       {/* <div className="header-image">
-            <img src={assets.header_img} alt=""/>
-          </div> */}
+          <img src={assets.header_img} alt=""/>
+        </div> */}
       <div className="header-contents">
-        <h3>Fresh vegetables for you.</h3>
         {!token ? (
           <div>
-            <h2>Welcome guest !</h2>
-            <button className="signin" onClick={() => setShowLogin(true)}>
-              Sign in
-            </button>
+            <h2>Welcome !</h2>
           </div>
         ) : (
           <div>
             <h2>Welcome {user || "user"} !</h2>
-            <button>View Menu</button>
           </div>
+        )}
+        <h3>Fresh vegetables for you.</h3>
+        {token ? (
+          <button onClick={() => navigate("/myOrders")} className="btn-header">
+            My Orders
+          </button>
+        ) : (
+          <button className="btn-header" onClick={() => setShowLogin(true)}>
+            Sign in
+          </button>
         )}
       </div>
     </div>

@@ -1,21 +1,19 @@
-.navbar {
-    padding: 0px 0;
-    display: flex;
+.navbar{
+    padding: 10px 0px;
+    display:flex;
     justify-content: space-between;
     align-items: center;
-    margin: 0 50px;
 }
 
-.navbar .logo {
+.navbar .image .logo{
     height: 80px;
     left: 0;
     object-fit: cover;
     top: 0;
     width: 203px;
-  
 }
 
-.navbar-menu {
+.navbar-menu{
     display: flex;
     list-style: none;
     gap: 20px;
@@ -23,26 +21,26 @@
     font-size: 18px;
 }
 
-.navbar-right {
+.navbar-right{
     display: flex;
     align-items: center;
     gap: 40px;
 }
 
-.navbar button {
+.navbar button{
     background: transparent;
-    font-size: 16px;
+    font-size:16px;
     color: #49557e;
-    border: 1px solid tomato;
+    border: 1px solid #3FC01F;
     padding: 10px 30px;
     border-radius: 50px;
     cursor: pointer;
+    transition:  0.3s ;
 }
 
 .navbar button:hover{
     background-color: #82b98c54;
 }
-
 .navbar .active{
     padding-bottom: 2px;
     border-bottom: 2px solid #3FC01F;
@@ -51,11 +49,9 @@
 .navbar li{
     cursor: pointer;
 }
-
 .navbar-search-icon{
     position: relative;
 }
-
 .navbar-search-icon .dot{
     position: absolute;
     min-width:10px;

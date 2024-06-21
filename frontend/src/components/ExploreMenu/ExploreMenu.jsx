@@ -1,24 +1,42 @@
-import React from 'react'
-import './ExploreMenu.css'
-import { menu_list } from '../../assets/assets'
+import React, { useState, useEffect } from "react";
+import axios from "axios";
+import "./ExploreMenu.css";
 
-const ExploreMenu = ({category, setCategory}) => {
+const ExploreMenu = ({ setSelectedAdmin }) => {
+  const [admins, setAdmins] = useState([]);
+
+  useEffect(() => {
+    async function fetchAdmins() {
+      try {
+        const response = await axios.get(
+          "http://localhost:4000/api/admin/admins"
+        );
+        setAdmins(response.data.data);
+      } catch (error) {
+        console.error("Error fetching admins:", error);
+      }
+    }
+
+    fetchAdmins();
+  }, []);
+
   return (
-    <div className='explore-menu' id='explore-menu'>
-        <h1>Explore our menu</h1>
-        <p className='explore-menu-text-'>Choose from menu</p>
-        <div className="explore-menu-list" >
-            {menu_list.map((item, index) => {
-                return(
-                     <div onClick={() => setCategory((prev) => prev===item.menu_name ? 'All' : item.menu_name)} key={index} className='explore-menu-list-item'>
-                        <img className={category === item.menu_name ? "active" : ""} src={item.menu_image} alt=''/>
-                        <p>{item.menu_name}</p>
-                     </div>)
-            })}
-        </div>
-        <hr/>
+    <div className="explore-menu" id="explore-menu">
+      <h1>Explore Farmers</h1>
+      <div className="explore-menu-list">
+        {admins.map((admin) => (
+          <div
+            key={admin._id}
+            className="explore-menu-list-item"
+            onClick={() => setSelectedAdmin(admin)}
+          >
+            <p>{admin.name}</p>
+          </div>
+        ))}
+      </div>
+      <hr />
     </div>
-  )
-}
+  );
+};
 
-export default ExploreMenu
+export default ExploreMenu;
