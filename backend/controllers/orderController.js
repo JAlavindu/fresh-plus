@@ -1,6 +1,7 @@
 import orderModel from "../models/orderModel.js";
 import userModel from "../models/userModel.js"
 import Stripe from "stripe"
+import mongoose from "mongoose";
 
 const stripe = new Stripe(process.env.STRIPE_SECRET_KEY)
 
@@ -12,6 +13,7 @@ const placeOrder = async (req, res) => {
     try {
         const newOrder = new orderModel({
             userId: req.body.userId,
+            adminId: req.body.adminId,
             items: req.body.items,
             amount: req.body.amount,
             address: req.body.address,
@@ -91,7 +93,6 @@ const userOrders = async (req, res) => {
     }
 }
 
-
 // Listing orders for admin
 const listOrders = async (req, res) => {
     try {
@@ -114,6 +115,28 @@ const updateStatus = async (req, res) => {
     }
 }
 
+// get admin orders
+const adminOrders = async (req, res) => {
+    try {
+        const {userId} = req.body;
+
+        if (!userId) {
+            return res.status(400).json({ success: false, message: "userId is required" });
+        }
+
+        if (!mongoose.isValidObjectId(userId)) {
+            return res.status(400).json({ success: false, message: "Invalid userId format" });
+        }
+
+        const orders = await orderModel.find({ adminId: userId })
+        // console.log(req.body);
+        res.json({success:true, data:orders})
+        
+    } catch (error) {
+        console.log(error);
+        res.json({success:false, message:"Error"})
+    }
+}
 
 
-export {placeOrder, verifyOrder, userOrders, listOrders, updateStatus}
+export {placeOrder, verifyOrder, userOrders, listOrders, updateStatus, adminOrders}

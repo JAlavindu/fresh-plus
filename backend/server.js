@@ -6,6 +6,7 @@ import userRouter from "./routes/userRoute.js"
 import 'dotenv/config'
 import cartRouter from "./routes/cartRoute.js"
 import orderRouter from "./routes/orderRoute.js"
+import adminRouter from "./routes/adminRoute.js"
 
 
 // app config
@@ -25,6 +26,11 @@ app.use("/images", express.static('uploads'))
 
 // user
 app.use("/api/user", userRouter)
+
+//admin
+app.use("/api/admin", adminRouter)
+
+
 
 // cart
 app.use("/api/cart", cartRouter)
