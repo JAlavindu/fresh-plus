@@ -1,31 +1,77 @@
-import React from "react";
+import React, { useContext, useEffect, useState } from "react";
 import "./FoodDisplay.css";
 import { StoreContext } from "../../context/StoreContext";
-import { useContext } from "react";
 import FoodItem from "../FoodItem/FoodItem";
+import axios from "axios";
 
-const FoodDisplay = ({ category }) => {
-  const { food_list } = useContext(StoreContext);
+const FoodDisplay = ({ selectedAdmin }) => {
+  const { food_list, url } = useContext(StoreContext);
+  const [adminItems, setAdminItems] = useState([]);
+
+  const [allProducts, setAllProducts] = useState([]);
+
+  const fetchAllProducts = async () => {
+    try {
+      const response = await axios.get(`${url}/api/admin/getAll`);
+      setAllProducts(response.data.data);
+    } catch (error) {
+      console.error("Error fetching  items:", error);
+    }
+  };
+
+  useEffect(() => {
+    const fetchAdminItems = async () => {
+      try {
+        if (selectedAdmin && selectedAdmin._id) {
+          const response = await axios.get(
+            `${url}/api/admin/get-items/${selectedAdmin._id}`
+          );
+          setAdminItems(response.data.data);
+        }
+      } catch (error) {
+        console.error("Error fetching admin items:", error);
+      }
+    };
+
+    fetchAdminItems();
+    fetchAllProducts();
+  }, [selectedAdmin, url]);
 
   return (
     <div className="food-display" id="food-display">
-      <h2>Top Dishes near you</h2>
-      <div className="food-display-list">
-        {food_list.map((item, index) => {
-          if (category === "All" || category === item.category) {
-            return (
+      {selectedAdmin ? (
+        <div>
+          Products of {selectedAdmin.name}
+          <div className="food-display-list">
+            {adminItems.map((item) => (
               <FoodItem
-                key={index}
+                key={item._id}
                 id={item._id}
                 name={item.name}
                 description={item.description}
                 price={item.price}
                 image={item.image}
               />
-            );
-          }
-        })}
-      </div>
+            ))}
+          </div>
+        </div>
+      ) : (
+        <div>
+          Top Products near you <br />
+          <div className="food-display-list">
+            {allProducts.map((item) => (
+              <FoodItem
+                key={item._id}
+                id={item._id}
+                name={item.name}
+                description={item.description}
+                price={item.price}
+                image={item.image}
+              />
+            ))}
+          </div>
+        </div>
+      )}
     </div>
   );
 };

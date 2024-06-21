@@ -1,9 +1,9 @@
-import { React, createContext, useEffect, useState } from "react";
-import { food_list } from "../assets/assets";
+import React, { createContext, useState, useEffect } from "react";
+import axios from "axios";
 
 export const StoreContext = createContext(null);
 
-const storeContextProvider = ({ children }) => {
+const StoreContextProvider = ({ children }) => {
   const url = "http://localhost:4000";
   const [token, setToken] = useState("");
 
@@ -41,8 +41,37 @@ const storeContextProvider = ({ children }) => {
     }
     return totalAmount;
   };
+  const [food_list, setFoodList] = useState([]);
+  const [admins, setAdmins] = useState([]);
+
+  useEffect(() => {
+    async function fetchAdmins() {
+      try {
+        const response = await axios.get(
+          "http://localhost:4000/api/admin/admins"
+        );
+        setAdmins(response.data.data);
+      } catch (error) {
+        console.error("Error fetching admins:", error);
+      }
+    }
+
+    async function fetchFoodList() {
+      try {
+        const response = await axios.get(`${url}/api/admin/getAll`);
+        setFoodList(response.data.data);
+      } catch (error) {
+        console.error("Error fetching food list:", error);
+      }
+    }
+
+    fetchAdmins();
+    fetchFoodList();
+  }, []);
 
   const contextValue = {
+    food_list,
+    admins,
     url,
     token,
     setToken,
@@ -53,6 +82,7 @@ const storeContextProvider = ({ children }) => {
     removeFromCart,
     getTotalCartAmount,
   };
+
   return (
     <StoreContext.Provider value={contextValue}>
       {children}
@@ -60,4 +90,4 @@ const storeContextProvider = ({ children }) => {
   );
 };
 
-export default storeContextProvider;
+export default StoreContextProvider;

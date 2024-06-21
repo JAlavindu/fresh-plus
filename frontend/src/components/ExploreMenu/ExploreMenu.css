@@ -14,7 +14,7 @@
 }
 .explore-menu-list{
     display: flex;
-    justify-content: space-between;
+    /* justify-content: space-between; */
     align-items: center;
     gap: 30px;
     text-align: center;

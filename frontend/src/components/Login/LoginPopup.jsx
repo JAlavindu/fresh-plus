@@ -1,15 +1,14 @@
-import React from "react";
+import React, { useContext, useEffect } from "react";
 import "./LoginPopup.css";
 import { assets } from "../../assets/assets";
-import { useContext, useDebugValue, useEffect, useState } from "react";
+import { useState } from "react";
 import { StoreContext } from "../../context/StoreContext";
 import axios from "axios";
 
 const LoginPopup = ({ setShowLogin }) => {
-  const [currentState, setCurrentState] = useState("Login");
-
   const { url, setToken } = useContext(StoreContext);
 
+  const [currentState, setCurrentState] = useState("Login");
   const [data, setData] = useState({
     name: "",
     email: "",
@@ -23,10 +22,15 @@ const LoginPopup = ({ setShowLogin }) => {
     setData((data) => ({ ...data, [name]: value }));
   };
 
+  //   useEffect(() => {
+  //     console.log(data);
+  //   }, [data]);
+
   const onLogin = async (event) => {
     event.preventDefault();
 
     let newUrl = url;
+
     if (currentState === "Login") {
       newUrl += "/api/user/login";
     } else {
@@ -34,6 +38,7 @@ const LoginPopup = ({ setShowLogin }) => {
     }
 
     const response = await axios.post(newUrl, data);
+
     if (response.data.success) {
       setToken(response.data.token);
       localStorage.setItem("token", response.data.token);
@@ -88,7 +93,7 @@ const LoginPopup = ({ setShowLogin }) => {
           />
         </div>
         <button type="submit">
-          {currentState === "Sign Up" ? "Create account" : "Login"}
+          {currentState === "Sign Up" ? "create account" : "login"}
         </button>
         <div className="login-popup-condition">
           <input type="checkbox" required />
@@ -97,7 +102,7 @@ const LoginPopup = ({ setShowLogin }) => {
         {currentState === "Login" ? (
           <p>
             Create a new account?{" "}
-            <span onClick={() => setCurrentState("Sign Up")}>Clik here</span>
+            <span onClick={() => setCurrentState("Sign Up")}>clik here</span>
           </p>
         ) : (
           <p>

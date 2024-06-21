@@ -1,13 +1,13 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import "./NavBar.css";
 import { assets } from "../../assets/assets";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { StoreContext } from "../../context/StoreContext";
-import { useNavigate } from "react-router-dom";
 
-const NavBar = ({ setShowLogin }) => {
+const NavBar = ({ setShowLogin, userName }) => {
   const [menu, setMenu] = useState("home");
-  const { token, setToken, getTotalCartAmount } = useContext(StoreContext);
+  const { getTotalCartAmount, token, setToken } = useContext(StoreContext);
+
   const navigate = useNavigate();
 
   const logout = () => {
@@ -31,7 +31,7 @@ const NavBar = ({ setShowLogin }) => {
           className={menu === "home" ? "active" : ""}
           onClick={() => setMenu("home")}
         >
-          home
+          Home
         </Link>
         <a
           href="#explore-menu"
@@ -45,14 +45,14 @@ const NavBar = ({ setShowLogin }) => {
           className={menu === "mobile-app" ? "active" : ""}
           onClick={() => setMenu("mobile-app")}
         >
-          mobile-app
+          Mobile-app
         </a>
         <a
           href="#footer"
           className={menu === "contact-us" ? "active" : ""}
           onClick={() => setMenu("contact-us")}
         >
-          contact us
+          Contact us
         </a>
       </ul>
       <div className="navbar-right">
@@ -61,28 +61,37 @@ const NavBar = ({ setShowLogin }) => {
           alt="search"
           className="navbar-search-icon"
         />
-        <div className="navbar-right">
-          {!token ? (
-            <button onClick={() => setShowLogin(true)}>Sign in</button>
-          ) : (
-            <div>
-              <Link to="/cart">
-                <img src={assets.basket_icon} alt="cart" />
-              </Link>
-              <div className={getTotalCartAmount() === 0 ? "" : "dot"}></div>
-              <div className="navbar-profile">
-                <img src={assets.profile_icon} alt="" srcset="" />
-                <ul className="navbar-profile-dropdown">
-                  <li onClick={logout}>
-                    <img src={assets.logout_icon} alt="" />
-                    <p>Logout</p>
-                  </li>
-                </ul>
-              </div>
-            </div>
-          )}
+        <div className="navbar-search-icon">
+          <Link to="/cart">
+            <img src={assets.basket_icon} alt="cart" />
+          </Link>
+          <div className={getTotalCartAmount() === 0 ? "" : "dot"}></div>
         </div>
+
+        {!token ? (
+          <button onClick={() => setShowLogin(true)}>Sign in</button>
+        ) : (
+          <div className="navbar-profile">
+            <img src={assets.profile_icon} alt="" srcset="" />
+            <ul className="navbar-profile-dropdown">
+              <li
+                onClick={() => {
+                  navigate("/myorders");
+                }}
+              >
+                <img src={assets.bag_icon} alt="" />
+                <p>Orders</p>
+              </li>
+              <hr />
+              <li onClick={logout}>
+                <img src={assets.logout_icon} alt="" />
+                <p>Logout</p>
+              </li>
+            </ul>
+          </div>
+        )}
       </div>
+      {token ? userName ? <p>Hello {userName} !</p> : <p>Hello user !</p> : ""}
     </div>
   );
 };
