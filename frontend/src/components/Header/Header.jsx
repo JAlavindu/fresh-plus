@@ -48,9 +48,20 @@ const Header = ({ setShowLogin, setUserName }) => {
         )}
         <h3>Fresh vegetables for you.</h3>
         {token ? (
-          <button onClick={() => navigate("/myOrders")} className="btn-header">
-            My Orders
-          </button>
+          <div>
+            <button
+              onClick={() => navigate("/myOrders")}
+              className="btn-header"
+            >
+              My Orders
+            </button>
+            <button
+              onClick={() => navigate("/my-subscriptions")}
+              className="btn-header"
+            >
+              My Subscriptions
+            </button>
+          </div>
         ) : (
           <button className="btn-header" onClick={() => setShowLogin(true)}>
             Sign in

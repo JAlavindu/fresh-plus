@@ -8,9 +8,6 @@ import { log } from "console";
 const addItem = async (req, res) => {
 
     try {
-        // console.log("Request Body:", req.body);
-        // console.log("Uploaded File:", req.file);
-        // Create a new item based on the request body
         const newItem = new itemModel({
             adminId: req.body.userId,
             name: req.body.name,
