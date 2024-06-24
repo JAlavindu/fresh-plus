@@ -5,6 +5,7 @@ import ExploreMenu from "../../components/ExploreMenu/ExploreMenu.jsx";
 import FoodDisplay from "../../components/FoodDisplay/FoodDisplay.jsx";
 import AppDownload from "../../components/AppDownload/AppDownload.jsx";
 import { StoreContext } from "../../context/StoreContext";
+import SubscriptionPlan from "../../components/SubscriptionPlan/SubscriptionPlan .jsx";
 
 const Home = ({ setShowLogin, setUserName }) => {
   const [category, setCategory] = useState("All");
@@ -21,6 +22,7 @@ const Home = ({ setShowLogin, setUserName }) => {
         </div>
       ) : (
         <div>
+          <SubscriptionPlan />
           <ExploreMenu setSelectedAdmin={setSelectedAdmin} />
           <FoodDisplay selectedAdmin={selectedAdmin} />
         </div>

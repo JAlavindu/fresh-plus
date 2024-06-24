@@ -1,17 +1,17 @@
-.my-orders {
+.my-subscriptions {
     margin: 50px 0px;
 }
 
-.my-orders .container {
+.my-subscriptions .container {
    display: flex;
    flex-direction: column;
    gap: 20px;
    margin-top: 30px;
 }
 
-.my-orders-order {
+.my-subscriptions-subscription {
    display: grid;
-   grid-template-columns: 0.5fr 2fr 0.5fr 0.5fr 1fr 1fr;
+   grid-template-columns: 2fr 1fr 1fr 2fr 2fr 1fr;
    align-items: center;
    gap: 30px;
    font-size: 14px;
@@ -20,28 +20,28 @@
    border: 1px solid tomato;
 }
 
-.my-orders-order img {
+.my-subscriptions-subscription img {
     width: 50px;
 }
 
-.my-orders-order p span {
+.my-subscriptions-subscription p span {
     color: tomato;
 }
 
-.my-orders-order p b {
+.my-subscriptions-subscription p b {
    font-weight: 500;
    color: #454545;
 }
 
-.my-orders-order button {
+.my-subscriptions-subscription button {
    border: none;
    padding: 12px 0px;
    border-radius: 4px;
-   background-color: #e0a0a0;
+   background-color: #e18484;
    cursor: pointer;
 }
-.my-orders-order button:hover {
-   background-color: #edb4b4;
+.my-subscriptions-subscription button:hover {
+   background-color: #cca5a5;
    cursor: pointer;
 }
 

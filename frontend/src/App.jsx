@@ -8,6 +8,8 @@ import Footer from "./components/Footer/Footer";
 import LoginPopup from "./components/Login/LoginPopup";
 import Verify from "./pages/verify/Verify";
 import MyOrders from "./pages/MyOrders/MyOrders";
+import VerifySubscription from "./pages/VerifySubscription/VerifySubscription";
+import MySubscription from "./pages/MySubscription/MySubscription";
 
 const App = () => {
   const [showLogin, setShowLogin] = useState(false);
@@ -31,6 +33,8 @@ const App = () => {
           <Route path="/order" element={<PlaceOrder />} />
           <Route path="/verify" element={<Verify />} />
           <Route path="/myorders" element={<MyOrders />} />
+          <Route path="/verifySubscription" element={<VerifySubscription />} />
+          <Route path="/my-subscriptions" element={<MySubscription />} />
         </Routes>
       </div>
       <Footer />
