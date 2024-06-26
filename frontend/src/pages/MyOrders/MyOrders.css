@@ -11,7 +11,7 @@
 
 .my-orders-order {
    display: grid;
-   grid-template-columns: 0.5fr 2fr 0.5fr 0.5fr 1fr 1fr;
+   grid-template-columns: 0.5fr 2fr 1fr 1fr 2fr 1fr;
    align-items: center;
    gap: 30px;
    font-size: 14px;
@@ -37,11 +37,7 @@
    border: none;
    padding: 12px 0px;
    border-radius: 4px;
-   background-color: #e0a0a0;
-   cursor: pointer;
-}
-.my-orders-order button:hover {
-   background-color: #edb4b4;
+   background-color: #ffe1e1;
    cursor: pointer;
 }
 

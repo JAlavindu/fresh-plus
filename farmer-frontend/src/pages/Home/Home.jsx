@@ -6,7 +6,7 @@ import { StoreContext } from "../../context/StoreContext";
 import { useNavigate } from "react-router-dom";
 import List from "../List/List";
 
-const Home = ({ setShowLogin, setAdminName }) => {
+const FarmHome = ({ setShowLogin, setAdminName }) => {
   const { url, token, setToken } = useContext(StoreContext);
   const navigate = useNavigate();
 
@@ -27,4 +27,4 @@ const Home = ({ setShowLogin, setAdminName }) => {
   );
 };
 
-export default Home;
+export default FarmHome;

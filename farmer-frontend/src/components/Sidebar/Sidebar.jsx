@@ -1,6 +1,6 @@
 import React, { useContext } from "react";
 import "./Sidebar.css";
-import { assets } from "../../../../admin/src/assets/assets";
+import { assets } from "../../assets/assets";
 import { NavLink } from "react-router-dom";
 import { StoreContext } from "../../context/StoreContext";
 
@@ -17,10 +17,6 @@ const Sidebar = () => {
         <NavLink to="/add" className="sidebar-option">
           <img src={assets.add_icon} alt="Add Product" />
           <p>Add Product</p>
-        </NavLink>
-        <NavLink to="/add-subscription" className="sidebar-option">
-          <img src={assets.add_icon} alt="Add Subscription" />
-          <p>Add Subscription</p>
         </NavLink>
         <NavLink to="/list" className="sidebar-option">
           <img src={assets.order_icon} alt="List Products" />

@@ -3,7 +3,6 @@ import { adminName, getAllAdmins, loginUser, registerUser } from "../controllers
 import authMiddleWare from "../middleware/auth.js"
 import { addItem, getAllItems, getIemsByAdminId, getItems, removeItem } from "../controllers/itemController.js"
 import multer from "multer";
-import { addSubscription } from "../controllers/subscriptionController.js";
 
 const adminRouter = express.Router()
 
@@ -24,8 +23,6 @@ adminRouter.get("/name", authMiddleWare, adminName)
 adminRouter.get("/admins", getAllAdmins)
 
 adminRouter.post("/add-item", upload.single("image"), authMiddleWare, addItem)
-adminRouter.post("/add-subscription", upload.none(), authMiddleWare, addSubscription)
-
 adminRouter.post("/get-items", authMiddleWare, getItems)
 adminRouter.post("/remove-item", authMiddleWare, removeItem)
 adminRouter.get("/get-items/:adminId", getIemsByAdminId)

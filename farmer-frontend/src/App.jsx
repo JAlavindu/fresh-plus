@@ -1,18 +1,18 @@
 import React, { useState } from "react";
 import Navbar from "./components/Navbar/Navbar";
 import { Route, Routes } from "react-router-dom";
-import Home from "./pages/Home/Home";
+// import Home from "./pages/Home/Home";
 import MyProducts from "./pages/MyProducts/MyProducts";
 import LoginPopup from "./components/LoginPopup/LoginPopup";
 import Add from "./pages/Add/Add";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import Sidebar from "./components/Sidebar/Sidebar";
+import Sidebar from "../../admin/src/components/Sidebar/Sidebar";
 import List from "./pages/List/List";
 import { useContext } from "react";
 import { StoreContext } from "../src/context/StoreContext";
 import MyOrders from "./pages/MyOrders/MyOrders";
-import AddSubscription from "./pages/AddSubscription/AddSubscription";
+import FarmHome from "./pages/Home/Home";
 
 const App = () => {
   const [showLogin, setShowLogin] = useState(false);
@@ -35,14 +35,13 @@ const App = () => {
             <Route
               path="/"
               element={
-                <Home setShowLogin={setShowLogin} setAdminName={setAdminName} />
+                <FarmHome
+                  setShowLogin={setShowLogin}
+                  setAdminName={setAdminName}
+                />
               }
             ></Route>
             <Route path="/add" element={<Add url={url} />} />
-            <Route
-              path="/add-subscription"
-              element={<AddSubscription url={url} />}
-            />
             <Route path="/list" element={<List url={url} />} />
             <Route path="/orders" element={<MyOrders url={url} />} />
           </Routes>

@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 import "./ExploreMenu.css";
 
-const ExploreMenu = ({ setSelectedAdmin }) => {
+const ExploreMenu = ({ setSelectedAdmin, setClickedAll }) => {
   const [admins, setAdmins] = useState([]);
 
   useEffect(() => {
@@ -30,9 +30,12 @@ const ExploreMenu = ({ setSelectedAdmin }) => {
             className="explore-menu-list-item"
             onClick={() => setSelectedAdmin(admin)}
           >
-            <p>{admin.name}</p>
+            <p onClick={() => setClickedAll(false)}>{admin.name}</p>
           </div>
         ))}
+      </div>
+      <div className="center">
+        <button onClick={() => setClickedAll(true)}>All</button>
       </div>
       <hr />
     </div>

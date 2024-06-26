@@ -33,20 +33,27 @@ const NavBar = ({ setShowLogin, userName }) => {
         >
           Home
         </Link>
-        <a
-          href="#explore-menu"
-          className={menu === "menu" ? "active" : ""}
-          onClick={() => setMenu("menu")}
-        >
-          About Us
-        </a>
-        <a
-          href="#app-download"
-          className={menu === "mobile-app" ? "active" : ""}
-          onClick={() => setMenu("mobile-app")}
-        >
-          Mobile-app
-        </a>
+        {token ? (
+          <></>
+        ) : (
+          <>
+            <a
+              href="#about-us"
+              className={menu === "menu" ? "active" : ""}
+              onClick={() => setMenu("menu")}
+            >
+              About Us
+            </a>
+            <a
+              href="#app-download"
+              className={menu === "mobile-app" ? "active" : ""}
+              onClick={() => setMenu("mobile-app")}
+            >
+              Mobile-app
+            </a>
+          </>
+        )}
+
         <a
           href="#footer"
           className={menu === "contact-us" ? "active" : ""}

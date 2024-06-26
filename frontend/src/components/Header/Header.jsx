@@ -34,8 +34,8 @@ const Header = ({ setShowLogin, setUserName }) => {
   return (
     <div className="header">
       {/* <div className="header-image">
-          <img src={assets.header_img} alt=""/>
-        </div> */}
+        <img src={assets.header_img} alt="" />
+      </div> */}
       <div className="header-contents">
         {!token ? (
           <div>
