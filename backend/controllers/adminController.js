@@ -37,7 +37,7 @@ const createToken = (id) => {
 // Register user
 // http://localhost:4000/api/admin/register
 const registerUser = async (req, res) => {
-    const {name, password, email} = req.body;
+    const {name, password, email, city} = req.body;
     try {
         //checking is user is already available
         const exist = await adminModel.findOne({email});
@@ -62,6 +62,7 @@ const registerUser = async (req, res) => {
             name:name,
             email:email,
             password:hashedPassword,
+            city: city
         })
 
         const admin = await newAdmin.save()
@@ -69,7 +70,7 @@ const registerUser = async (req, res) => {
         res.json({success:true, token})
 
     } catch(error) {
-        console.log(error)
+        console.log(error);
         res.json({success:false, message: "Error"})
     }
 }

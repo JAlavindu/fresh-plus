@@ -3,18 +3,19 @@ import adminModel from "../models/adminModel.js";
 
 const calculateDistance = async (req, res) => {
 
-    const { userId } = req.body;
+    const { userId, orderCity } = req.body;
+
     const admin = await adminModel.findOne({ _id: userId });
-    const userCity = admin.city;
 
-    console.log(userCity);
+    if (!admin) {
+        console.log("no admin");
+        return res.status(404).json({ error: "Admin not found" });
+    }
 
-    const { farmerCity, orderCity } = req.body;
-
-    // console.log(farmerCity, orderCity);
+    const adminCity = admin.city;
 
     const apiKey = 'AIzaSyD_MPVruX94wvxD8Rqah_IgKf790OPPaW4';
-    const url = `https://maps.googleapis.com/maps/api/distancematrix/json?origins=${farmerCity}&destinations=${orderCity}&key=${apiKey}`;
+    const url = `https://maps.googleapis.com/maps/api/distancematrix/json?origins=${adminCity}&destinations=${orderCity}&key=${apiKey}`;
 
     try {
         const response = await axios.get(url);

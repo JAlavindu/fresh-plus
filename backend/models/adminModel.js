@@ -5,7 +5,8 @@ const adminSchema = new mongoose.Schema({
     email: {type: String, required: true, unique: true},
     password: {type: String, required: true},
     products: {type: Object, default:{}},
-}, {minimize:false})
+    city: {type: String, required: false},
+}, {minimize:false})    
 
 const adminModel = mongoose.models.admin || mongoose.model("admin", adminSchema);
 

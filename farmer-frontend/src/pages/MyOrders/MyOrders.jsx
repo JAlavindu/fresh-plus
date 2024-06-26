@@ -36,13 +36,15 @@ const MyOrders = ({ url }) => {
   }, [token]);
 
   // Calculate delivery info
-  const calculateDeliveryInfo = async (farmerCity, orderCity) => {
+  const calculateDeliveryInfo = async (orderCity) => {
     try {
-      const response = await axios.get(`${url}/api/delivery/calculate`, {
-        params: { farmerCity, orderCity },
-        headers: { token },
-      });
-      setDeliveryInfo(response.data);
+      const response = await axios.post(
+        `${url}/api/admin/delivery`,
+        { orderCity },
+        { headers: { token } }
+      );
+      setDeliveryInfo(response.data.data);
+      console.log(deliveryInfo);
       setModalIsOpen(true);
     } catch (error) {
       console.error("Error fetching delivery info:", error);
@@ -65,12 +67,11 @@ const MyOrders = ({ url }) => {
             </p>
             <p>Rs.{order.amount}.00</p>
             <p>Items: {order.items.length}</p>
+            <p>destination: {order.address.city}</p>
             <p>
               <span>&#x25cf;</span> <b>{order.status}</b>
             </p>
-            <button
-              onClick={() => calculateDeliveryInfo("farmer_city", order.city)}
-            >
+            <button onClick={() => calculateDeliveryInfo(order.address.city)}>
               Deliver Order
             </button>
           </div>
@@ -81,7 +82,7 @@ const MyOrders = ({ url }) => {
         {deliveryInfo ? (
           <div>
             <p>Distance: {deliveryInfo.distance} km</p>
-            <p>Delivery Fee: ${deliveryInfo.deliveryFee.toFixed(2)}</p>
+            <p>Delivery Fee: ${deliveryInfo.deliveryFee}</p>
             <button onClick={() => setModalIsOpen(false)}>Close</button>
           </div>
         ) : (
