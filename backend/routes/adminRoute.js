@@ -3,6 +3,8 @@ import { adminName, getAllAdmins, loginUser, registerUser } from "../controllers
 import authMiddleWare from "../middleware/auth.js"
 import { addItem, getAllItems, getIemsByAdminId, getItems, removeItem } from "../controllers/itemController.js"
 import multer from "multer";
+import { addSubscription } from "../controllers/subscriptionController.js";
+import { calculateDistance } from "../controllers/locationController.js";
 
 const adminRouter = express.Router()
 
@@ -27,5 +29,8 @@ adminRouter.post("/get-items", authMiddleWare, getItems)
 adminRouter.post("/remove-item", authMiddleWare, removeItem)
 adminRouter.get("/get-items/:adminId", getIemsByAdminId)
 adminRouter.get("/getAll", getAllItems)
+
+// location
+adminRouter.post("/delivery", authMiddleWare, calculateDistance)
 
 export default adminRouter

@@ -3,6 +3,7 @@ import axios from "axios";
 import "./MyOrders.css";
 import { assets } from "../../assets/assets/assets";
 import { StoreContext } from "../../context/StoreContext";
+import Modal from "react-modal";
 
 const MyOrders = ({ url }) => {
   const [data, setData] = useState([]);
@@ -10,14 +11,22 @@ const MyOrders = ({ url }) => {
   const [error, setError] = useState(null);
   const { token } = useContext(StoreContext);
 
-  // API call
-  const fetchOrders = async () => {
-    const response = await axios.get(url + "/api/order/admin-orders", {
-      headers: { token },
-    });
+  // Modal state
+  const [modalIsOpen, setModalIsOpen] = useState(false);
+  const [deliveryInfo, setDeliveryInfo] = useState(null);
 
-    setData(response.data.data);
-    console.log(response.data.data);
+  // API call to fetch orders
+  const fetchOrders = async () => {
+    try {
+      const response = await axios.get(url + "/api/order/admin-orders", {
+        headers: { token },
+      });
+      setData(response.data.data);
+    } catch (error) {
+      setError(error);
+    } finally {
+      setLoading(false);
+    }
   };
 
   useEffect(() => {
@@ -26,38 +35,59 @@ const MyOrders = ({ url }) => {
     }
   }, [token]);
 
-  //   const removeItem = (itemId) => {
-  //     // Logic to remove item
-  //     console.log(`Remove item with id: ${itemId}`);
-  //   };
+  // Calculate delivery info
+  const calculateDeliveryInfo = async (farmerCity, orderCity) => {
+    try {
+      const response = await axios.get(`${url}/api/delivery/calculate`, {
+        params: { farmerCity, orderCity },
+        headers: { token },
+      });
+      setDeliveryInfo(response.data);
+      setModalIsOpen(true);
+    } catch (error) {
+      console.error("Error fetching delivery info:", error);
+    }
+  };
 
   return (
     <div className="my-orders">
       <h2>My Orders</h2>
       <div className="container">
-        {data.map((order, index) => {
-          return (
-            <div key={index} className="my-orders-order">
-              <img src={assets.parcel_icon} alt="" />
-              <p>
-                {order.items.map((item, index) => {
-                  if (index === order.items.length - 1) {
-                    return item.name + " x " + item.quantity;
-                  } else {
-                    return item.name + " x " + item.quantity + ", ";
-                  }
-                })}
-              </p>
-              <p>Rs.{order.amount}.00</p>
-              <p>Items: {order.items.length}</p>
-              <p>
-                <span>&#x25cf;</span> <b>{order.status}</b>
-              </p>
-              <button onClick={fetchOrders}>Deliver Order</button>
-            </div>
-          );
-        })}
+        {data.map((order, index) => (
+          <div key={index} className="my-orders-order">
+            <img src={assets.parcel_icon} alt="" />
+            <p>
+              {order.items.map((item, index) =>
+                index === order.items.length - 1
+                  ? item.name + " x " + item.quantity
+                  : item.name + " x " + item.quantity + ", "
+              )}
+            </p>
+            <p>Rs.{order.amount}.00</p>
+            <p>Items: {order.items.length}</p>
+            <p>
+              <span>&#x25cf;</span> <b>{order.status}</b>
+            </p>
+            <button
+              onClick={() => calculateDeliveryInfo("farmer_city", order.city)}
+            >
+              Deliver Order
+            </button>
+          </div>
+        ))}
       </div>
+      <Modal isOpen={modalIsOpen} onRequestClose={() => setModalIsOpen(false)}>
+        <h2>Delivery Info</h2>
+        {deliveryInfo ? (
+          <div>
+            <p>Distance: {deliveryInfo.distance} km</p>
+            <p>Delivery Fee: ${deliveryInfo.deliveryFee.toFixed(2)}</p>
+            <button onClick={() => setModalIsOpen(false)}>Close</button>
+          </div>
+        ) : (
+          <p>Loading...</p>
+        )}
+      </Modal>
     </div>
   );
 };
