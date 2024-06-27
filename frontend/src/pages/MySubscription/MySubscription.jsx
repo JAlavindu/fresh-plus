@@ -19,15 +19,21 @@ const MySubscription = () => {
     );
 
     setData(response.data.data);
-    console.log(response.data.data);
+    // console.log(response.data.data);
   };
 
   const cancelUserSubscriptions = async (subscriptionId) => {
-    const response = await axios.post(
-      url + "/api/subscription/remove-subscription",
-      { subscriptionId: subscriptionId },
-      { headers: { token } }
+    const confirmed = window.confirm(
+      "Are you sure you want to remove this subscription?"
     );
+
+    if (confirmed) {
+      const response = await axios.post(
+        url + "/api/subscription/remove-subscription",
+        { subscriptionId: subscriptionId },
+        { headers: { token } }
+      );
+    }
   };
 
   useEffect(() => {

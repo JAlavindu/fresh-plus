@@ -192,11 +192,40 @@ const getAllSubscriptions = async (req, res) => {
   }
 };
 
-export {
-  createSubscription,
-  verifySubscription,
-  userSubscriptions,
-  removeUserSubscription,
-  addSubscription,
-  getAllSubscriptions,
+const adminSubscriptions = async (req, res) => {
+  try {
+    const adminId = req.body.userId;
+
+    // Find subscriptions where userId is included in the users array
+    const subscriptions = await subscriptionModel.find({
+      adminId
+    });
+
+    res.json({ success: true, data: subscriptions });
+  } catch (error) {
+    console.error(error);
+    res.json({ success: false, message: "Error fetching user subscriptions" });
+  }
 };
+
+const removeAdminSubscription = async (req, res) => {
+  try {
+    const { subscriptionId } = req.body;
+    console.log("sub id", subscriptionId);
+
+    // Find and remove the subscription by its _id
+    const subscription = await subscriptionModel.findByIdAndDelete(subscriptionId);
+
+    if (!subscription) {
+      return res.status(404).json({ success: false, message: "Subscription not found" });
+    }
+
+    res.json({ success: true, message: "Subscription removed successfully", data: subscription });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ success: false, message: "Error removing subscription" });
+  }
+};
+
+
+export {createSubscription, verifySubscription, userSubscriptions, removeUserSubscription, addSubscription, getAllSubscriptions, adminSubscriptions, removeAdminSubscription}

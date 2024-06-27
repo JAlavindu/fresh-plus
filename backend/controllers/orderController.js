@@ -138,5 +138,35 @@ const adminOrders = async (req, res) => {
     }
 }
 
+const adminConfirmOrder = async (req, res) => {
+    try {
+        const {orderId} = req.body;
+        
+        if (!orderId) {
+            return res.status(400).json({ success: false, message: "orderId is required" });
+        }
+        
+        if (!mongoose.isValidObjectId(orderId)) {
+            return res.status(400).json({ success: false, message: "Invalid userId format" });
+        }
+        
+        const order = await orderModel.findOne({ _id: orderId });
 
-export {placeOrder, verifyOrder, userOrders, listOrders, updateStatus, adminOrders}
+        if (!order) {
+            return res.status(400).json({ success: false, message: "order not found" });
+        }
+
+        // console.log(order.status);
+        order.status = "On Delivery";
+        await order.save();
+
+        res.json({success:true, data: order});
+        
+    } catch (error) {
+        console.log(error);
+        res.json({success:false, message:"Error"})
+    }
+}
+
+
+export {placeOrder, verifyOrder, userOrders, listOrders, updateStatus, adminOrders, adminConfirmOrder}

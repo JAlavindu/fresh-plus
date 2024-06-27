@@ -11,7 +11,7 @@
 
 .my-orders-order {
    display: grid;
-   grid-template-columns: 0.5fr 2fr 1fr 1fr 2fr 1fr;
+   grid-template-columns: 0.5fr 2fr 1fr 1fr 1fr 2fr 2fr 2fr;
    align-items: center;
    gap: 30px;
    font-size: 14px;
@@ -40,4 +40,93 @@
    border-radius: 4px;
    background-color: #05cb23;
    cursor: pointer;
+}
+
+/* Modal overlay style */
+.modal-overlay {
+   position: fixed;
+   top: 0;
+   left: 0;
+   right: 0;
+   bottom: 0;
+   background-color: rgba(0, 0, 0, 0.75);
+   display: flex;
+   align-items: center;
+   justify-content: center;
+ }
+ 
+ /* Modal content style */
+ .modal {
+   background: white;
+   padding: 20px;
+   width: 800px;
+   margin: auto;
+   border-radius: 8px;
+   box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+   animation: fadeIn 0.15s;
+ }
+ 
+ .modal-content {
+   display: flex;
+   flex-direction: column;
+   align-items: center;
+ }
+ 
+ /* Modal title style */
+ .modal-title {
+   margin-bottom: 20px;
+   font-size: 24px;
+   font-weight: bold;
+ }
+ 
+ /* Delivery info style */
+ .delivery-info {
+   width: 100%;
+ }
+ 
+ .delivery-info-item {
+   margin: 10px 0;
+   font-size: 18px;
+ }
+ 
+ /* Close button style */
+ .modal-close-button {
+   padding: 10px 20px;
+   margin-top: 20px;
+   font-size: 16px;
+   background-color: #007bff;
+   color: white;
+   border: none;
+   border-radius: 4px;
+   cursor: pointer;
+ }
+ .modal-confirm-button {
+   padding: 10px 20px;
+   margin-top: 20px;
+   font-size: 16px;
+   background-color: #00a218;
+   color: white;
+   border: none;
+   border-radius: 4px;
+   cursor: pointer;
+ }
+ 
+ .modal-close-button:hover {
+   background-color: #0056b3;
+ }
+ 
+ /* Loading text style */
+ .loading {
+   font-size: 18px;
+   color: #999;
+ }
+ 
+ /* Fade-in animation */
+ @keyframes fadeIn {
+   from { opacity: 0; }
+   to { opacity: 1; }
+ }
+ 
+ .my-orders-order .order-delivered {
+  background-color: #0e5beb;
 }

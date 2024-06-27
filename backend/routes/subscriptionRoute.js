@@ -1,6 +1,6 @@
 import express from "express"
 import authMiddleWare from "../middleware/auth.js"
-import { createSubscription, getAllSubscriptions, removeUserSubscription, userSubscriptions, verifySubscription } from "../controllers/subscriptionController.js";
+import {adminSubscriptions, createSubscription, getAllSubscriptions, removeAdminSubscription, removeUserSubscription, userSubscriptions, verifySubscription } from "../controllers/subscriptionController.js";
 
 const subscriptionRouter = express.Router();
 
@@ -8,7 +8,9 @@ const subscriptionRouter = express.Router();
 subscriptionRouter.post("/new-subscription", authMiddleWare, createSubscription)
 subscriptionRouter.post("/verify-subscription", verifySubscription)
 subscriptionRouter.post("/user-subscriptions", authMiddleWare, userSubscriptions);
+subscriptionRouter.post("/admin-subscriptions", authMiddleWare, adminSubscriptions);
 subscriptionRouter.post("/remove-subscription", authMiddleWare, removeUserSubscription);
+subscriptionRouter.post("/remove-admin-subscription", removeAdminSubscription);
 subscriptionRouter.get("/get-subscriptions", getAllSubscriptions);
 
 export default subscriptionRouter
