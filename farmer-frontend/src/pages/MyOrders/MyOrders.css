@@ -11,7 +11,7 @@
 
 .my-orders-order {
    display: grid;
-   grid-template-columns: 0.5fr 2fr 1fr 1fr 2fr 2fr 1fr;
+   grid-template-columns: 0.5fr 2fr 1fr 1fr 1fr 2fr 2fr 2fr;
    align-items: center;
    gap: 30px;
    font-size: 14px;
@@ -127,3 +127,6 @@
    to { opacity: 1; }
  }
  
+ .my-orders-order .order-delivered {
+  background-color: #0e5beb;
+}

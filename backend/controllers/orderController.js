@@ -146,7 +146,7 @@ const adminConfirmOrder = async (req, res) => {
             return res.status(400).json({ success: false, message: "orderId is required" });
         }
         
-        if (!mongoose.isValidObjectId(userId)) {
+        if (!mongoose.isValidObjectId(orderId)) {
             return res.status(400).json({ success: false, message: "Invalid userId format" });
         }
         
@@ -156,7 +156,9 @@ const adminConfirmOrder = async (req, res) => {
             return res.status(400).json({ success: false, message: "order not found" });
         }
 
-        console.log(order.status);
+        // console.log(order.status);
+        order.status = "On Delivery";
+        await order.save();
 
         res.json({success:true, data: order});
         

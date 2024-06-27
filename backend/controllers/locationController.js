@@ -31,7 +31,7 @@ const calculateDistance = async (req, res) => {
         console.log(response);
         const distance = response.data.rows[0].elements[0].distance.value / 1000; // distance in kilometers
         const deliveryFee = calculateDeliveryFee(distance);
-        res.json({success: true, data: { distance, deliveryFee, order }});
+        res.json({success: true, data: { distance, deliveryFee, order, adminCity, orderCity }});
         
     } catch (error) {
         res.status(500).json({ error: 'Failed to calculate distance' });
@@ -39,7 +39,7 @@ const calculateDistance = async (req, res) => {
 }
 
 const calculateDeliveryFee = (distance) => {
-    const feePerKm = 1.5; // Example fee rate
+    const feePerKm = 100; // Example fee rate
     return distance * feePerKm;
 };
 

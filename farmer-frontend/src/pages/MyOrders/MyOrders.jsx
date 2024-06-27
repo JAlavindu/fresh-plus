@@ -4,6 +4,7 @@ import "./MyOrders.css";
 import { assets } from "../../assets/assets/assets";
 import { StoreContext } from "../../context/StoreContext";
 import Modal from "react-modal";
+import formatDateTime from "../../utils/formatDateTime";
 
 const MyOrders = ({ url }) => {
   const [data, setData] = useState([]);
@@ -44,14 +45,12 @@ const MyOrders = ({ url }) => {
         { headers: { token } }
       );
       setDeliveryInfo(response.data.data);
-      console.log(deliveryInfo);
       setModalIsOpen(true);
     } catch (error) {
       console.error("Error fetching delivery info:", error);
     }
   };
 
-  // STOP FROM here
   const confirmOrder = async (orderId) => {
     const confirmed = window.confirm(
       "Are you sure you want to confirm this order?"
@@ -61,36 +60,49 @@ const MyOrders = ({ url }) => {
       const response = await axios.post(`${url}/api/order/confirm-order`, {
         orderId,
       });
-      console.log("order confirmed");
+      window.location.reload();
     }
-    s;
   };
 
   return (
     <div className="my-orders">
       <h2>My Orders</h2>
       <div className="container">
-        {data.map((order, index) => (
-          <div key={index} className="my-orders-order">
-            <img src={assets.parcel_icon} alt="" />
-            <p>
-              {order.items.map((item, index) =>
-                index === order.items.length - 1
-                  ? item.name + " x " + item.quantity
-                  : item.name + " x " + item.quantity + ", "
-              )}
-            </p>
-            <p>Rs.{order.amount}.00</p>
-            <p>Items: {order.items.length}</p>
-            <p>destination: {order.address.city}</p>
-            <p>
-              <span>&#x25cf;</span> <b>{order.status}</b>
-            </p>
-            <button onClick={() => calculateDeliveryInfo(order._id)}>
-              Deliver Order
-            </button>
-          </div>
-        ))}
+        {data.map((order, index) => {
+          const { date, time } = formatDateTime(order.date);
+          return (
+            <div key={index} className="my-orders-order">
+              <img src={assets.parcel_icon} alt="" />
+              <p>
+                {order.items.map((item, index) =>
+                  index === order.items.length - 1
+                    ? item.name + " x " + item.quantity
+                    : item.name + " x " + item.quantity + ", "
+                )}
+              </p>
+              <p>Rs.{order.amount}.00</p>
+              <p>Items: {order.items.length}</p>
+              <p>{date}</p>
+              <p>Destination: {order.address.city}</p>
+              <p>
+                <span>&#x25cf;</span> <b>{order.status}</b>
+              </p>
+              <button
+                className={`button ${
+                  order.status === "On Delivery"
+                    ? "order-delivered"
+                    : "deliver-order"
+                }`}
+                onClick={() => calculateDeliveryInfo(order._id)}
+                disabled={order.status === "On Delivery"}
+              >
+                {order.status === "On Delivery"
+                  ? "Order Delivered"
+                  : "Deliver Order"}
+              </button>
+            </div>
+          );
+        })}
       </div>
       <Modal
         isOpen={modalIsOpen}
@@ -103,13 +115,15 @@ const MyOrders = ({ url }) => {
           {deliveryInfo ? (
             <div className="delivery-info">
               <p className="delivery-info-item">
+                From: {deliveryInfo.adminCity}
+              </p>
+              <p className="delivery-info-item">To: {deliveryInfo.orderCity}</p>
+              <p className="delivery-info-item">
                 Distance: {deliveryInfo.distance} km
               </p>
               <p className="delivery-info-item">
-                Delivery Fee: ${deliveryInfo.deliveryFee}
-              </p>
-              <p className="delivery-info-item">
-                Delivery order: {deliveryInfo.order._id}
+                Delivery Fee: Rs. {Math.round(deliveryInfo.deliveryFee - 200)}
+                .00
               </p>
               <button
                 className="modal-confirm-button"
