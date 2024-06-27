@@ -36,11 +36,11 @@ const MyOrders = ({ url }) => {
   }, [token]);
 
   // Calculate delivery info
-  const calculateDeliveryInfo = async (orderCity) => {
+  const calculateDeliveryInfo = async (orderId) => {
     try {
       const response = await axios.post(
         `${url}/api/admin/delivery`,
-        { orderCity },
+        { orderId },
         { headers: { token } }
       );
       setDeliveryInfo(response.data.data);
@@ -49,6 +49,21 @@ const MyOrders = ({ url }) => {
     } catch (error) {
       console.error("Error fetching delivery info:", error);
     }
+  };
+
+  // STOP FROM here
+  const confirmOrder = async (orderId) => {
+    const confirmed = window.confirm(
+      "Are you sure you want to confirm this order?"
+    );
+
+    if (confirmed) {
+      const response = await axios.post(`${url}/api/order/confirm-order`, {
+        orderId,
+      });
+      console.log("order confirmed");
+    }
+    s;
   };
 
   return (
@@ -71,23 +86,48 @@ const MyOrders = ({ url }) => {
             <p>
               <span>&#x25cf;</span> <b>{order.status}</b>
             </p>
-            <button onClick={() => calculateDeliveryInfo(order.address.city)}>
+            <button onClick={() => calculateDeliveryInfo(order._id)}>
               Deliver Order
             </button>
           </div>
         ))}
       </div>
-      <Modal isOpen={modalIsOpen} onRequestClose={() => setModalIsOpen(false)}>
-        <h2>Delivery Info</h2>
-        {deliveryInfo ? (
-          <div>
-            <p>Distance: {deliveryInfo.distance} km</p>
-            <p>Delivery Fee: ${deliveryInfo.deliveryFee}</p>
-            <button onClick={() => setModalIsOpen(false)}>Close</button>
-          </div>
-        ) : (
-          <p>Loading...</p>
-        )}
+      <Modal
+        isOpen={modalIsOpen}
+        onRequestClose={() => setModalIsOpen(false)}
+        className="modal"
+        overlayClassName="modal-overlay"
+      >
+        <div className="modal-content">
+          <h2 className="modal-title">Delivery Info</h2>
+          {deliveryInfo ? (
+            <div className="delivery-info">
+              <p className="delivery-info-item">
+                Distance: {deliveryInfo.distance} km
+              </p>
+              <p className="delivery-info-item">
+                Delivery Fee: ${deliveryInfo.deliveryFee}
+              </p>
+              <p className="delivery-info-item">
+                Delivery order: {deliveryInfo.order._id}
+              </p>
+              <button
+                className="modal-confirm-button"
+                onClick={() => confirmOrder(deliveryInfo.order._id)}
+              >
+                Confirm Order
+              </button>
+              <button
+                className="modal-close-button"
+                onClick={() => setModalIsOpen(false)}
+              >
+                Close
+              </button>
+            </div>
+          ) : (
+            <p className="loading">Loading...</p>
+          )}
+        </div>
       </Modal>
     </div>
   );
