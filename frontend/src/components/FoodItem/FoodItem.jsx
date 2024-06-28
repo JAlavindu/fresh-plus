@@ -45,7 +45,7 @@ const FoodItem = ({ id, name, adminName, price, description, image }) => {
         </div>
         <p className="food-item-desc">From {adminName}</p>
         <p className="food-item-desc">{description}</p>
-        <p className="food-item-price">Rs. {price}</p>
+        <p className="food-item-price">1 kg - Rs. {price}.00</p>
       </div>
     </div>
   );

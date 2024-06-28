@@ -2,12 +2,16 @@
   border: 1px solid #000;
   padding: 20px;
   border-radius: 8px;
-  max-width: 400px;
+  width: 400px;
   margin: 30px;
   text-align: center;
 }
 .subs-container {
-  display: flex;
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: 5px;
+  justify-content: center;
+  margin: 10px;
 }
 .subscription-plan h2 {
   margin-bottom: 20px;

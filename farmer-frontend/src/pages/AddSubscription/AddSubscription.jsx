@@ -45,7 +45,7 @@ const AddSubscription = ({ url }) => {
         setData({
           name: "",
           description: "",
-          validity: "",
+          validity: "7",
           price: "",
         });
 

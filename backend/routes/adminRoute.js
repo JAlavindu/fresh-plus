@@ -1,5 +1,5 @@
 import express from "express"
-import { adminName, getAllAdmins, loginUser, registerUser } from "../controllers/adminController.js"
+import { adminName, getAdmin, getAllAdmins, loginUser, registerUser } from "../controllers/adminController.js"
 import authMiddleWare from "../middleware/auth.js"
 import { addItem, getAllItems, getIemsByAdminId, getItems, removeItem } from "../controllers/itemController.js"
 import multer from "multer";
@@ -22,6 +22,7 @@ const upload = multer({storage: storage})
 adminRouter.post("/register", registerUser)
 adminRouter.post("/login", loginUser)
 adminRouter.get("/name", authMiddleWare, adminName)
+adminRouter.post("/get-admin", getAdmin)
 adminRouter.get("/admins", getAllAdmins)
 
 adminRouter.post("/add-item", upload.single("image"), authMiddleWare, addItem)
