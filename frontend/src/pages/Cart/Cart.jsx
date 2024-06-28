@@ -17,7 +17,7 @@ const Cart = () => {
           <p>Items</p>
           <p>Title</p>
           <p>Price</p>
-          <p>Quantity</p>
+          <p>Quantity (kg)</p>
           <p>Total</p>
           <p>Remove</p>
         </div>

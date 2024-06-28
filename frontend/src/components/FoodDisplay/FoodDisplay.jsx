@@ -41,13 +41,14 @@ const FoodDisplay = ({ selectedAdmin, clickedAll }) => {
     <div className="food-display" id="food-display">
       {clickedAll ? (
         <div>
-          Top Products near you <br />
+          <h2 className="title-heading">Top Products near you</h2> <br />
           <div className="food-display-list">
             {allProducts.map((item) => (
               <FoodItem
                 key={item._id}
                 id={item._id}
                 name={item.name}
+                adminName={item.adminName}
                 description={item.description}
                 price={item.price}
                 image={item.image}
@@ -57,13 +58,14 @@ const FoodDisplay = ({ selectedAdmin, clickedAll }) => {
         </div>
       ) : selectedAdmin ? (
         <div>
-          Products of {selectedAdmin.name}
+          <h2 className="title-heading">Products of {selectedAdmin.name}</h2>
           <div className="food-display-list">
             {adminItems.map((item) => (
               <FoodItem
                 key={item._id}
                 id={item._id}
                 name={item.name}
+                adminName={item.adminName}
                 description={item.description}
                 price={item.price}
                 image={item.image}
@@ -81,6 +83,7 @@ const FoodDisplay = ({ selectedAdmin, clickedAll }) => {
                 key={item._id}
                 id={item._id}
                 name={item.name}
+                adminName={item.adminName}
                 description={item.description}
                 price={item.price}
                 image={item.image}

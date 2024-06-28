@@ -1,21 +1,41 @@
 .list-table-format {
     display: grid;
-    grid-template-columns: 0.5fr 1fr 1fr 1fr 1fr 0.5fr;
+    grid-template-columns: 1fr 1.5fr 1fr 1fr 1fr  2fr;
     align-items: center;
-    gap: 10px;
+    gap: 15px;
     padding: 12px 15px;
     border: 1px solid #cacaca;
-    font-size: 13px;
+    font-size: 16px;
+}
+.list-table-format-subscription {
+    display: grid;
+    grid-template-columns: 1fr 2fr 2fr 1fr 1fr 1fr 2fr;
+    align-items: center;
+    gap: 15px;
+    padding: 12px 10px;
+    border: 1px solid #cacaca;
+    font-size: 16px;
 }
 
 .list-table-format.title {
+    background-color: #f9f9f9;
+}
+.list-table-format-subscription.title {
     background-color: #f9f9f9;
 }
 
 .list-table-format img {
     width: 50px;
 }
+.list-table-format-subscription img {
+    width: 40px;
+}
 
 .cursor {
     cursor: pointer;
 }
+
+.actions {
+    display: flex;
+    gap: 20px;
+  }

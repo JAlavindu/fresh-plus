@@ -25,6 +25,7 @@ adminRouter.get("/name", authMiddleWare, adminName)
 adminRouter.get("/admins", getAllAdmins)
 
 adminRouter.post("/add-item", upload.single("image"), authMiddleWare, addItem)
+adminRouter.post("/add-subscription", upload.none(), authMiddleWare, addSubscription)
 adminRouter.post("/get-items", authMiddleWare, getItems)
 adminRouter.post("/remove-item", authMiddleWare, removeItem)
 adminRouter.get("/get-items/:adminId", getIemsByAdminId)

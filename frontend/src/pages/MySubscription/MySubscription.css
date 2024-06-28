@@ -11,10 +11,10 @@
 
 .my-subscriptions-subscription {
    display: grid;
-   grid-template-columns: 2fr 1fr 1fr 2fr 2fr 1fr;
+   grid-template-columns: 1fr 1fr 0.5fr 1fr 1fr 1fr;
    align-items: center;
    gap: 30px;
-   font-size: 14px;
+   font-size: 16px;
    padding: 10px 20px;
    color: #454545;
    border: 1px solid tomato;
