@@ -7,12 +7,13 @@ import LoginPopup from "./components/LoginPopup/LoginPopup";
 import Add from "./pages/Add/Add";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import Sidebar from "../../admin/src/components/Sidebar/Sidebar";
+import Sidebar from "./components//Sidebar/Sidebar";
 import List from "./pages/List/List";
 import { useContext } from "react";
 import { StoreContext } from "../src/context/StoreContext";
 import MyOrders from "./pages/MyOrders/MyOrders";
 import FarmHome from "./pages/Home/Home";
+import AddSubscription from "./pages/AddSubscription/AddSubscription";
 
 const App = () => {
   const [showLogin, setShowLogin] = useState(false);
@@ -30,7 +31,7 @@ const App = () => {
         <Navbar setShowLogin={setShowLogin} adminName={adminName} />
         <hr />
         <div className="app-content">
-          <Sidebar />
+          {token ? <Sidebar /> : <></>}
           <Routes>
             <Route
               path="/"
@@ -42,6 +43,10 @@ const App = () => {
               }
             ></Route>
             <Route path="/add" element={<Add url={url} />} />
+            <Route
+              path="/add-subscription"
+              element={<AddSubscription url={url} />}
+            />
             <Route path="/list" element={<List url={url} />} />
             <Route path="/orders" element={<MyOrders url={url} />} />
           </Routes>

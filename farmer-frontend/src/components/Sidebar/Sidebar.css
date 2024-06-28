@@ -25,7 +25,11 @@
     cursor: pointer;
 }
 
-.sidebar-option.active {
-    background: #fff0ed;
-    border-color: tomato;
+.sidebar-option img{
+    width: max(10%, 32px);
+}
+
+.sidebar-option.active{
+    background-color:#a9a9a9;
+    border-color: #08af0f;
 }

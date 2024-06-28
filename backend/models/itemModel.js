@@ -8,6 +8,7 @@ const itemSchema = new mongoose.Schema({
     category: {type: String, required: true},
     
     adminId: {type: String, required: true},
+    adminName: {type: String, required: true},
     amount: {type: Number, required: true},
     date: {type: Date, default: Date.now()},
 })

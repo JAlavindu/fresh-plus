@@ -11,6 +11,7 @@ const AddSubscription = ({ url }) => {
   const [data, setData] = useState({
     name: "",
     description: "",
+    validity: "7",
     price: "",
   });
 
@@ -27,11 +28,12 @@ const AddSubscription = ({ url }) => {
 
     formData.append("name", data.name);
     formData.append("description", data.description);
+    formData.append("validity", Number(data.validity));
     formData.append("price", Number(data.price));
 
     try {
       const response = await axios.post(
-        `${url}/api/admin//add-subscription`,
+        `${url}/api/admin/add-subscription`,
         formData,
         {
           headers: {
@@ -43,6 +45,7 @@ const AddSubscription = ({ url }) => {
         setData({
           name: "",
           description: "",
+          validity: "7",
           price: "",
         });
 
@@ -51,8 +54,8 @@ const AddSubscription = ({ url }) => {
         toast.error(response.data.message);
       }
     } catch (error) {
-      console.error("Error adding product:", error);
-      toast.error("Error adding product");
+      console.error("Error adding subscription:", error);
+      toast.error("Error adding subscription");
     }
   };
 
@@ -118,6 +121,19 @@ const AddSubscription = ({ url }) => {
               placeholder="Rs.1000"
               required
             />
+          </div>
+          <div className="add-price flex-col">
+            <p>Subscription validity</p>
+            <select
+              onChange={onChangeHandler}
+              value={data.validity}
+              name="validity"
+              required
+            >
+              <option value="7">7 days</option>
+              <option value="30">1 month</option>
+              <option value="90">3 months</option>
+            </select>
           </div>
         </div>
         <button type="submit" className="add-btn">

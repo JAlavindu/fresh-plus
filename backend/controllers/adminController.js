@@ -90,10 +90,6 @@ const adminName = async (req, res) => {
             return res.status(400).json({ success: false, message: "userId is required" });
         }
 
-        // Log the extracted userId
-        // console.log('Extracted userId:', userId);
-
-        // Check if userId is a valid ObjectId
         if (!mongoose.isValidObjectId(userId)) {
             return res.status(400).json({ success: false, message: "Invalid userId format" });
         }
@@ -101,16 +97,41 @@ const adminName = async (req, res) => {
         // Perform the database query using _id
         const admin = await adminModel.findOne({ _id: userId });
 
-        // Log the query result
-        // console.log('Query result:', user);
-
-        // Handle case when user is not found
         if (!admin) {
             return res.status(404).json({ success: false, message: "User not found" });
         }
 
         // Return only the name
         return res.json({ success: true, data: { name: admin.name } });
+
+    } catch (error) {
+        console.error('Error:', error);
+        return res.status(500).json({ success: false, message: "Internal Server Error" });
+    }
+}
+
+const getAdmin = async (req, res) => {
+    try {
+        const { adminId } = req.body;
+        console.log(req.body);
+
+        // Ensure userId is present
+        if (!adminId) {
+            return res.status(400).json({ success: false, message: "adminId is required" });
+        }
+
+        if (!mongoose.isValidObjectId(adminId)) {
+            return res.status(400).json({ success: false, message: "Invalid adminId format" });
+        }
+
+        // Perform the database query using _id
+        const admin = await adminModel.findOne({ _id: adminId });
+
+        if (!admin) {
+            return res.status(404).json({ success: false, message: "Admin not found" });
+        }
+
+        return res.json({ success: true, data: admin });
 
     } catch (error) {
         console.error('Error:', error);
@@ -137,4 +158,4 @@ const getAllAdmins = async (req, res) => {
     }
 }
 
-export {loginUser, registerUser,adminName, getAllAdmins}
+export {loginUser, registerUser,adminName, getAdmin, getAllAdmins}

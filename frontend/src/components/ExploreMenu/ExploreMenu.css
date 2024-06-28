@@ -9,6 +9,8 @@
 .explore-menu h1 {
   color: #262626;
   font-weight: 500;
+  margin-top: 10px;
+  margin-bottom: 0;
 }
 .explore-menu-text {
   max-width: 60%;
@@ -20,7 +22,7 @@
   align-items: center;
   gap: 30px;
   text-align: center;
-  margin: 20px 0px;
+  margin: 0 0px 5px 0px;
   overflow-x: scroll;
 }
 .explore-menu .center {
@@ -31,6 +33,7 @@
 .explore-menu button {
   padding: 10px 20px;
   background-color: #28a745;
+  font-size: 16px;
   color: white;
   border: none;
   border-radius: 5px;
@@ -70,4 +73,9 @@
     max-width: 100%;
     font-size: 14px;
   }
+}
+
+.explore-menu-list-item.active {
+  padding-bottom: 2px;
+  border-bottom: 2px solid #3fc01f;
 }

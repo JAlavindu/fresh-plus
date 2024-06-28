@@ -97,7 +97,7 @@ const MyOrders = ({ url }) => {
                 disabled={order.status === "On Delivery"}
               >
                 {order.status === "On Delivery"
-                  ? "Order Delivered"
+                  ? "On Delivery"
                   : "Deliver Order"}
               </button>
             </div>
