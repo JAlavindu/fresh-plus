@@ -5,7 +5,7 @@ import { NavLink } from "react-router-dom";
 import { StoreContext } from "../../context/StoreContext";
 
 const Sidebar = () => {
-  const { token } = useContext(StoreContext);
+  const { token, hasProcessingOrders } = useContext(StoreContext);
 
   if (!token) {
     return null;
@@ -28,7 +28,9 @@ const Sidebar = () => {
         </NavLink>
         <NavLink to="/orders" className="sidebar-option">
           <img src={assets.orders} alt="Orders" />
-          <p>Orders</p>
+          <p>
+            Orders {hasProcessingOrders && <span className="green-dot"></span>}
+          </p>
         </NavLink>
       </div>
     </div>

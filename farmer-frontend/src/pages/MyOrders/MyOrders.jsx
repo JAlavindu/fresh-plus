@@ -12,7 +12,7 @@ const MyOrders = ({ url }) => {
 
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
-  const { token } = useContext(StoreContext);
+  const { token, setHasProcessingOrders } = useContext(StoreContext);
 
   // Modal state
   const [modalIsOpen, setModalIsOpen] = useState(false);
@@ -25,6 +25,9 @@ const MyOrders = ({ url }) => {
         headers: { token },
       });
       setData(response.data.data);
+      setHasProcessingOrders(
+        response.data.data.some((order) => order.status === "Processing")
+      );
     } catch (error) {
       setError(error);
     } finally {
