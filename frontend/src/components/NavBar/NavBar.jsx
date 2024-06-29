@@ -14,6 +14,7 @@ const NavBar = ({ setShowLogin, userName }) => {
   const [user, setUser] = useState("");
   const [modal1IsOpen, setModal1IsOpen] = useState(false);
   const [modal2IsOpen, setModal2IsOpen] = useState(false);
+  const [modal3IsOpen, setModal3IsOpen] = useState(false);
 
   const [showNewPwdField, setShowNewPwdField] = useState(false);
 
@@ -139,6 +140,41 @@ const NavBar = ({ setShowLogin, userName }) => {
     }
   };
 
+  // Search
+  const [productName, setProductName] = useState("");
+  const [vegetablesChecked, setVegetablesChecked] = useState(false);
+  const [fruitsChecked, setFruitsChecked] = useState(false);
+  const [searchResults, setSearchResults] = useState("");
+
+  const handleSearch = async () => {
+    // Add your search logic here
+    console.log("Searching for:", productName);
+    console.log("Vegetables checked:", vegetablesChecked);
+    console.log("Fruits checked:", fruitsChecked);
+
+    if (!productName && !vegetablesChecked && !fruitsChecked) {
+      alert("Search fields are empty!");
+    } else {
+      try {
+        const response = await axios.post(
+          "http://localhost:4000/api/item/search",
+          {
+            name: productName,
+            vegetable: vegetablesChecked,
+            fruit: fruitsChecked,
+          }
+        );
+        setSearchResults(response.data.data);
+        console.log(response.data.data);
+      } catch (error) {
+        console.error("Error fetching  items:", error);
+      }
+    }
+
+    // Close the modal after search
+    // setModal3IsOpen(false);
+  };
+
   const logout = () => {
     localStorage.removeItem("token");
     setToken("");
@@ -200,6 +236,7 @@ const NavBar = ({ setShowLogin, userName }) => {
           src={assets.search_icon}
           alt="search"
           className="navbar-search-icon"
+          onClick={() => setModal3IsOpen(true)}
         />
         <div className="navbar-search-icon">
           <Link to="/cart">
@@ -277,7 +314,7 @@ const NavBar = ({ setShowLogin, userName }) => {
               >
                 <form onSubmit={save} className="place-order">
                   <div className="place-order-left">
-                    <p className="title">Edit Information</p>
+                    <p className="title modal-title">Edit Information</p>
                     <div className="multi-fields">
                       <input
                         name="name"
@@ -333,6 +370,87 @@ const NavBar = ({ setShowLogin, userName }) => {
                     </button>
                   </div>
                 </form>
+              </Modal>
+
+              {/* Modal 3 - Information */}
+              <Modal
+                isOpen={modal3IsOpen}
+                onRequestClose={() => setModal3IsOpen(false)}
+                className="modal"
+                overlayClassName="modal-overlay"
+              >
+                <div className="modal-content">
+                  <h2 className="modal-title">Search products</h2>
+                  <div className="delivery-info">
+                    <p className="delivery-info-item">
+                      <b>Enter product name:</b>
+                      <input
+                        className="delivery-info-item input"
+                        type="text"
+                        placeholder="Type here"
+                        value={productName}
+                        onChange={(e) => setProductName(e.target.value)}
+                      />
+                    </p>
+                    <p className="delivery-info-item">
+                      <b>Filter: </b>
+                    </p>
+                    <p className="delivery-info-item">
+                      <label>
+                        <input
+                          className="delivery-info-item input"
+                          type="checkbox"
+                          checked={vegetablesChecked}
+                          onChange={(e) =>
+                            setVegetablesChecked(e.target.checked)
+                          }
+                        />
+                        Vegetables
+                      </label>
+                    </p>
+                    <p className="delivery-info-item">
+                      <label>
+                        <input
+                          className="delivery-info-item input"
+                          type="checkbox"
+                          checked={fruitsChecked}
+                          onChange={(e) => setFruitsChecked(e.target.checked)}
+                        />
+                        Fruits
+                      </label>
+                    </p>
+                    <button
+                      className="modal-close-button"
+                      onClick={handleSearch}
+                    >
+                      Search
+                    </button>
+                    <button
+                      className="modal-close-button"
+                      onClick={() => {
+                        setModal3IsOpen(false);
+                        setProductName("");
+                        setVegetablesChecked(false);
+                        setFruitsChecked(false);
+                        setSearchResults("");
+                      }}
+                    >
+                      Close
+                    </button>
+                    {searchResults && searchResults.length > 0 && (
+                      <div>
+                        <p className="delivery-info-item">Search results...</p>
+                        {searchResults.map((item, index) => (
+                          <div key={index}>
+                            <p className="delivery-info-item">
+                              {item.name} by {item.adminName}
+                            </p>
+                          </div>
+                        ))}
+                      </div>
+                    )}
+                  </div>
+                </div>
               </Modal>
 
               <hr />

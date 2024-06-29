@@ -8,6 +8,7 @@ import cartRouter from "./routes/cartRoute.js";
 import orderRouter from "./routes/orderRoute.js";
 import adminRouter from "./routes/adminRoute.js";
 import subscriptionRouter from "./routes/subscriptionRoute.js";
+import itemRouter from "./routes/itemRoute.js";
 
 // app config
 const app = express();
@@ -32,6 +33,9 @@ app.use("/api/admin", adminRouter);
 
 // cart
 app.use("/api/cart", cartRouter);
+
+// items
+app.use("/api/item", itemRouter);
 
 //order
 app.use("/api/order", orderRouter);

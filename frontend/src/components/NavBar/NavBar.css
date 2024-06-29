@@ -59,6 +59,7 @@
 }
 .navbar-search-icon {
   position: relative;
+  cursor: pointer;
 }
 .navbar p {
   position: relative;
@@ -76,6 +77,7 @@
 
 .navbar-profile {
   position: relative;
+  cursor: pointer;
 }
 .navbar-profile:hover .navbar-profile-dropdown {
   display: flex;
@@ -237,4 +239,21 @@
 }
 .view-info:hover {
   background-color: #eda756;
+}
+
+ /* Search */
+ .delivery-info-item input {
+  padding: 8px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  font-size: 16px;
+  margin-left: 5px;
+}
+
+.delivery-info-item label {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 16px;
+  
 }

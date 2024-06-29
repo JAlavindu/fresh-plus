@@ -138,4 +138,38 @@ const removeItem = async (req, res) => {
     }
   };
 
-export {addItem, getItems ,removeItem, getIemsByAdminId, getAllItems}
+  // Search item by name
+  const searchItems = async (req, res) => {
+    try {
+      const { name, vegetable, fruit } = req.body;
+      console.log(req.body);
+      let filter = {};
+  
+      // If name is provided, add it to the filter using a case-insensitive regex
+      if (name) {
+        const nameRegex = new RegExp(`^${name}$`, 'i');
+        filter.name = nameRegex;
+      }
+  
+      // If vegetable or fruit is true, add category to the filter
+      if (vegetable || fruit) {
+        filter.category = { $in: [] };
+        if (vegetable) {
+          filter.category.$in.push('Vegetable');
+        }
+        if (fruit) {
+          filter.category.$in.push('Fruit');
+        }
+      }
+  
+      const items = await itemModel.find(filter);
+      res.json({ success: true, data: items });
+    } catch (error) {
+      console.error('Error fetching items by name:', error);
+      res.status(500).json({ success: false, message: 'Internal Server Error' });
+    }
+  };
+  
+
+
+export {addItem, getItems ,removeItem, getIemsByAdminId, getAllItems, searchItems}
