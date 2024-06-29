@@ -3,14 +3,16 @@ import "./ProductInfo.css";
 import FoodItem from "../FoodItem/FoodItem";
 import { StoreContext } from "../../context/StoreContext";
 import axios from "axios";
-import { useParams } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 
 const ProductInfo = () => {
   const { id } = useParams();
   const [item, setItem] = useState(null);
   const [adminItems, setAdminItems] = useState([]);
-  const [selectedWeight, setSelectedWeight] = useState(100);
-  const { cartItems, addToCart, removeFromCart, url } =
+  const [selectedWeight, setSelectedWeight] = useState(1000); // Set default to 1kg in grams
+  const [price, setPrice] = useState("");
+
+  const { token, cartItems, addToCart, removeFromCart, url } =
     useContext(StoreContext);
 
   useEffect(() => {
@@ -22,6 +24,9 @@ const ProductInfo = () => {
         });
         const selectedItem = productResponse.data.data;
         setItem(selectedItem);
+
+        // Set the default price
+        setPrice(selectedItem.price);
 
         // Fetch the products of the same admin
         if (selectedItem && selectedItem.adminId) {
@@ -39,8 +44,20 @@ const ProductInfo = () => {
     fetchProductAndAdminItems();
   }, [id, url]);
 
+  useEffect(() => {
+    if (item) {
+      // Update the price based on the selected weight
+      const newPrice = (item.price * selectedWeight) / 1000; // Assuming item.price is for 1kg
+      setPrice(newPrice);
+    }
+  }, [selectedWeight, item]);
+
   if (!item) {
     return <div>Loading...</div>;
+  }
+
+  if (!token) {
+    window.location.href = "/";
   }
 
   return (
@@ -62,7 +79,9 @@ const ProductInfo = () => {
             quod quam natus, ad corrupti!
           </p>{" "}
           <br />
-          <h3>Rs.{item.price}</h3>
+          <h3>
+            {selectedWeight / 1000}kg - Rs.{price}
+          </h3>
           <select
             value={selectedWeight}
             onChange={(e) => setSelectedWeight(Number(e.target.value))}
