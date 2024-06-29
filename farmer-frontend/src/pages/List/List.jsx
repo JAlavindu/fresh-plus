@@ -15,12 +15,23 @@ const List = ({ url }) => {
   const [item, setItem] = useState("");
   const [modal1IsOpen, setModal1IsOpen] = useState(false);
 
+  const [subscription, setSubscription] = useState("");
+  const [modal2IsOpen, setModal2IsOpen] = useState(false);
+
   const [data, setData] = useState({
     name: "",
     description: "",
     price: 0,
     category: "Vegetable",
     amount: 0,
+  });
+
+  const [subscriptionData, setSubscriptionData] = useState({
+    name: "",
+    description: "",
+    price: 0,
+    validity: 7,
+    validityDescription: "",
   });
 
   const onChangeHandler = (event) => {
@@ -30,7 +41,17 @@ const List = ({ url }) => {
     setData((data) => ({ ...data, [name]: value }));
   };
 
-  const save = async (event) => {
+  const onChangeHandler2 = (event) => {
+    const name = event.target.name;
+    const value = event.target.value;
+
+    setSubscriptionData((subscriptionData) => ({
+      ...subscriptionData,
+      [name]: value,
+    }));
+  };
+
+  const updateItem = async (event) => {
     event.preventDefault();
 
     let saveData = {
@@ -57,7 +78,37 @@ const List = ({ url }) => {
         alert("Error");
       }
     } catch (error) {
-      console.error("Error fetching item:", error);
+      console.error("Error updating item:", error);
+    }
+  };
+
+  const updateSubscription = async (event) => {
+    event.preventDefault();
+
+    let saveData = {
+      subscriptionId: subscription._id,
+      name: subscriptionData.name,
+      description: subscriptionData.description,
+      price: subscriptionData.price,
+      validity: subscriptionData.validity,
+      validityDescription: subscriptionData.validityDescription,
+    };
+
+    try {
+      const response = await axios.post(
+        "http://localhost:4000/api/subscription/update-subscription",
+        saveData
+      );
+
+      if (response.data.success) {
+        alert("Subscription details updated");
+        setModal2IsOpen(false);
+        window.location.reload("/list");
+      } else {
+        alert("Error");
+      }
+    } catch (error) {
+      console.error("Error updating subscription:", error);
     }
   };
 
@@ -81,6 +132,29 @@ const List = ({ url }) => {
       setModal1IsOpen(true);
     } catch (error) {
       console.error("Error fetching item:", error);
+    }
+  };
+
+  const fetchSubscription = async (subscriptionId) => {
+    // console.log(itemId);
+    try {
+      const response = await axios.post(
+        "http://localhost:4000/api/subscription/get-subscription",
+        { subscriptionId: subscriptionId }
+      );
+      setSubscription(response.data.data);
+
+      setSubscriptionData({
+        name: response.data.data.name,
+        description: response.data.data.description,
+        price: response.data.data.price,
+        validity: response.data.data.validity,
+        validityDescription: response.data.data.validityDescription,
+      });
+
+      setModal2IsOpen(true);
+    } catch (error) {
+      console.error("Error fetching subscription:", error);
     }
   };
 
@@ -231,7 +305,7 @@ const List = ({ url }) => {
                 <p>{date}</p>
                 <div className="actions">
                   <p
-                    onClick={() => removeSubscription(item._id)}
+                    onClick={() => fetchSubscription(item._id)}
                     className="cursor"
                   >
                     Edit
@@ -246,6 +320,8 @@ const List = ({ url }) => {
               </div>
             );
           })}
+
+          {/* Modal1 */}
           <Modal
             isOpen={modal1IsOpen}
             onRequestClose={() => setModal1IsOpen(false)}
@@ -255,7 +331,7 @@ const List = ({ url }) => {
             <div className="modal-content">
               <h2 className="modal-title">Edit Information</h2>
               <div className="delivery-info">
-                <form onSubmit={save}>
+                <form onSubmit={updateItem}>
                   <p className="delivery-info-item">
                     Name:{" "}
                     <input
@@ -319,6 +395,89 @@ const List = ({ url }) => {
                   <button
                     className="modal-close-button"
                     onClick={() => setModal1IsOpen(false)}
+                  >
+                    Close
+                  </button>
+                </form>
+              </div>
+            </div>
+          </Modal>
+
+          {/* Modal2 */}
+          <Modal
+            isOpen={modal2IsOpen}
+            onRequestClose={() => setModal2IsOpen(false)}
+            className="modal"
+            overlayClassName="modal-overlay"
+          >
+            <div className="modal-content">
+              <h2 className="modal-title">Edit Information</h2>
+              <div className="delivery-info">
+                <form onSubmit={updateSubscription}>
+                  <p className="delivery-info-item">
+                    Name:{" "}
+                    <input
+                      name="name"
+                      onChange={onChangeHandler2}
+                      value={subscriptionData.name}
+                      type="text"
+                      placeholder="name"
+                      required
+                    />
+                  </p>
+                  <p className="delivery-info-item">
+                    Description:{" "}
+                    <input
+                      name="description"
+                      onChange={onChangeHandler2}
+                      value={subscriptionData.description}
+                      type="text"
+                      placeholder="description"
+                      required
+                    />
+                  </p>
+                  <p className="delivery-info-item">
+                    Price:{" "}
+                    <input
+                      name="price"
+                      onChange={onChangeHandler2}
+                      value={subscriptionData.price}
+                      type="number"
+                      placeholder="price"
+                      required
+                    />
+                  </p>
+                  <p className="delivery-info-item">
+                    Validity:{" "}
+                    <select
+                      name="validity"
+                      onChange={onChangeHandler2}
+                      value={subscriptionData.validity}
+                      required
+                    >
+                      <option value={7}>7 days</option>
+                      <option value={30}>30 days</option>
+                      <option value={90}>90 days</option>
+                    </select>
+                  </p>
+                  <p className="delivery-info-item">
+                    Validity Description:{" "}
+                    <input
+                      name="validityDescription"
+                      onChange={onChangeHandler2}
+                      value={subscriptionData.validityDescription}
+                      type="text"
+                      placeholder="validity description"
+                      required
+                    />
+                  </p>
+
+                  <button type="submit" className="modal-close-button">
+                    Update
+                  </button>
+                  <button
+                    className="modal-close-button"
+                    onClick={() => setModal2IsOpen(false)}
                   >
                     Close
                   </button>
