@@ -12,6 +12,7 @@ const AddSubscription = ({ url }) => {
     name: "",
     description: "",
     validity: "7",
+    validityDescription: "",
     price: "",
   });
 
@@ -29,6 +30,7 @@ const AddSubscription = ({ url }) => {
     formData.append("name", data.name);
     formData.append("description", data.description);
     formData.append("validity", Number(data.validity));
+    formData.append("validityDescription", data.validityDescription);
     formData.append("price", Number(data.price));
 
     try {
@@ -46,6 +48,7 @@ const AddSubscription = ({ url }) => {
           name: "",
           description: "",
           validity: "7",
+          validityDescription: "",
           price: "",
         });
 
@@ -108,6 +111,18 @@ const AddSubscription = ({ url }) => {
             placeholder="Type here"
             required
           ></textarea>
+        </div>
+
+        <div className="add-product-name flex-col">
+          <p>Validity Description</p>
+          <input
+            onChange={onChangeHandler}
+            value={data.validityDescription}
+            type="text"
+            name="validityDescription"
+            placeholder="Twice a week"
+            required
+          />
         </div>
 
         <div className="add-category-price">

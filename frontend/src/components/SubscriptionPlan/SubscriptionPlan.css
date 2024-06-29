@@ -81,3 +81,7 @@
     width: 300px;
   }
 }
+
+.explore-menu-list-item .validity {
+  color: red;
+}

@@ -39,7 +39,7 @@ const calculateDistance = async (req, res) => {
 }
 
 const calculateDeliveryFee = (distance) => {
-    const feePerKm = 100; // Example fee rate
+    const feePerKm = 40; // Example fee rate
     return distance * feePerKm;
 };
 

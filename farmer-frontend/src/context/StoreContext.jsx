@@ -7,6 +7,7 @@ export const StoreContext = createContext(null);
 const StoreContextProvider = (props) => {
   const url = "http://localhost:4000";
   const [token, setToken] = useState("");
+  const [hasProcessingOrders, setHasProcessingOrders] = useState(false);
 
   const [food_list, setFoodList] = useState([]);
 
@@ -36,6 +37,8 @@ const StoreContextProvider = (props) => {
     url,
     token,
     setToken,
+    hasProcessingOrders,
+    setHasProcessingOrders,
   };
   return (
     <StoreContext.Provider value={contextValue}>

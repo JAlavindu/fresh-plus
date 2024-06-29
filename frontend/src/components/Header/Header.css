@@ -66,6 +66,9 @@
   border-radius: 50px;
   cursor: pointer;
 }
+.header-contents button:hover {
+  background-color: #ddd6d6;
+}
 .header-contents button:not(:last-child) {
   margin-right: 10px;
 }

@@ -72,10 +72,126 @@ const registerUser = async (req, res) => {
     }
 }
 
+const updateUser = async (req, res) => {
+    const { userId, name, email, password } = req.body;
+    try {
+        // Check if the user exists
+        const user = await userModel.findById(userId);
+        if (!user) {
+            return res.status(404).json({ success: false, message: "User not found" });
+        }
+
+        // Check if the new email is already in use by another user
+        if (email && email !== user.email) {
+            const existingUser = await userModel.findOne({ email });
+            if (existingUser) {
+                return res.status(400).json({ success: false, message: "Email already in use" });
+            }
+        }
+
+        // Validate email format
+        if (email && !validator.isEmail(email)) {
+            return res.status(400).json({ success: false, message: "Enter a valid email" });
+        }
+
+        // Validate password strength
+        if (password && password.length < 8) {
+            return res.status(400).json({ success: false, message: "Enter a strong password" });
+        }
+
+        // Hash the new password if provided
+        let hashedPassword;
+        if (password) {
+            const salt = await bcrypt.genSalt(10);
+            hashedPassword = await bcrypt.hash(password, salt);
+        }
+
+        // Update user details
+        const updatedData = {
+            ...(name && { name }),
+            ...(email && { email }),
+            ...(password && { password: hashedPassword }),
+        };
+
+        const updatedUser = await userModel.findByIdAndUpdate(userId, updatedData, { new: true });
+
+        return res.status(200).json({ success: true, message: "User updated", data: updatedUser });
+    } catch (error) {
+        console.error('Error:', error);
+        return res.status(500).json({ success: false, message: "Internal Server Error" });
+    }
+}
+
+const getUser = async (req, res) => {
+    try {
+        const { userId } = req.body;
+        // console.log(req.body);
+
+        // Ensure userId is present
+        if (!userId) {
+            return res.status(400).json({ success: false, message: "userId is required" });
+        }
+
+        if (!mongoose.isValidObjectId(userId)) {
+            return res.status(400).json({ success: false, message: "Invalid userId format" });
+        }
+
+        // Perform the database query using _id
+        const user = await userModel.findOne({ _id: userId });
+
+        if (!user) {
+            return res.status(404).json({ success: false, message: "user not found" });
+        }
+
+        return res.json({ success: true, data: {name: user.name, email: user.email} });
+
+    } catch (error) {
+        console.error('Error:', error);
+        return res.status(500).json({ success: false, message: "Internal Server Error" });
+    }
+}
+
+const comparePassword = async (req, res) => {
+    try {
+        const { userId, password } = req.body;
+        // console.log(req.body);
+
+        // Ensure userId and password are present
+        if (!userId || !password) {
+            return res.status(400).json({ success: false, message: "userId and password are required" });
+        }
+
+        // Validate userId format
+        if (!mongoose.isValidObjectId(userId)) {
+            return res.status(400).json({ success: false, message: "Invalid userId format" });
+        }
+
+        // Perform the database query using _id
+        const user = await userModel.findOne({ _id: userId });
+
+        if (!user) {
+            return res.status(404).json({ success: false, message: "User not found" });
+        }
+
+        // Compare the plaintext password with the hashed password
+        const isMatch = await bcrypt.compare(password, user.password);
+
+        if (!isMatch) {
+            return res.status(401).json({ success: false, message: "Password is incorrect" });
+        }
+
+        return res.json({ success: true, message: "Password is correct" });
+
+    } catch (error) {
+        console.error('Error:', error);
+        return res.status(500).json({ success: false, message: "Internal Server Error" });
+    }
+}
+
 const userName = async (req, res) => {
     try {
         // Log the request body for debugging
-        console.log('Request body:', req.body);
+        // console.log('Request body:', req.body);
 
         // Extract userId from the request body
         const { userId } = req.body;
@@ -113,4 +229,4 @@ const userName = async (req, res) => {
     }
 }
 
-export {loginUser, registerUser, userName}
+export {loginUser, registerUser, updateUser, getUser, comparePassword, userName}

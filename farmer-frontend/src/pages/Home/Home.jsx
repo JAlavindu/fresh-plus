@@ -1,14 +1,37 @@
-import React, { useContext } from "react";
+import React, { useContext, useEffect } from "react";
 import "./Home.css";
 import Header from "../../components/Header/Header";
 import Fooddisplay from "../../components/Fooddisplay/Fooddisplay";
 import { StoreContext } from "../../context/StoreContext";
 import { useNavigate } from "react-router-dom";
 import List from "../List/List";
+import axios from "axios";
 
-const FarmHome = ({ setShowLogin, setAdminName }) => {
-  const { url, token, setToken } = useContext(StoreContext);
+const Home = ({ setShowLogin, setAdminName }) => {
+  const { url, token, setToken, hasProcessingOrders, setHasProcessingOrders } =
+    useContext(StoreContext);
   const navigate = useNavigate();
+
+  const fetchOrders = async () => {
+    try {
+      const response = await axios.get(url + "/api/order/admin-orders", {
+        headers: { token },
+      });
+      setHasProcessingOrders(
+        response.data.data.some((order) => order.status === "Processing")
+      );
+    } catch (error) {
+      setError(error);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  useEffect(() => {
+    if (token) {
+      fetchOrders();
+    }
+  }, [token]);
 
   return (
     <div className="home">
@@ -19,7 +42,10 @@ const FarmHome = ({ setShowLogin, setAdminName }) => {
         </div>
       ) : (
         <div>
-          <button onClick={() => navigate("/orders")}>View Orders</button>
+          <button onClick={() => navigate("/orders")}>
+            View Orders
+            {hasProcessingOrders && <span className="green-dot"></span>}
+          </button>
           <button onClick={() => navigate("/add")}>Add Item</button>
         </div>
       )}
@@ -27,4 +53,4 @@ const FarmHome = ({ setShowLogin, setAdminName }) => {
   );
 };
 
-export default FarmHome;
+export default Home;

@@ -17,6 +17,7 @@ const addSubscription = async (req, res) => {
       name: req.body.name,
       description: req.body.description,
       validity: req.body.validity,
+      validityDescription: req.body.validityDescription,
       price: req.body.price,
     });
 
@@ -33,6 +34,7 @@ const addSubscription = async (req, res) => {
           name: savedItem.name,
           description: savedItem.description,
           validity: savedItem.validity,
+          validityDescription: savedItem.validityDescription,
           price: savedItem.price,
         },
       };
@@ -197,6 +199,7 @@ const getAllSubscriptions = async (req, res) => {
 const adminSubscriptions = async (req, res) => {
   try {
     const adminId = req.body.userId;
+    console.log(adminId);
 
     // Find subscriptions where userId is included in the users array
     const subscriptions = await subscriptionModel.find({

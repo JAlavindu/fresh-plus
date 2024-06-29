@@ -12,7 +12,7 @@ import List from "./pages/List/List";
 import { useContext } from "react";
 import { StoreContext } from "../src/context/StoreContext";
 import MyOrders from "./pages/MyOrders/MyOrders";
-import FarmHome from "./pages/Home/Home";
+import Home from "./pages/Home/Home";
 import AddSubscription from "./pages/AddSubscription/AddSubscription";
 
 const App = () => {
@@ -36,10 +36,7 @@ const App = () => {
             <Route
               path="/"
               element={
-                <FarmHome
-                  setShowLogin={setShowLogin}
-                  setAdminName={setAdminName}
-                />
+                <Home setShowLogin={setShowLogin} setAdminName={setAdminName} />
               }
             ></Route>
             <Route path="/add" element={<Add url={url} />} />
