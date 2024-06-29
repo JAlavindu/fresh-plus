@@ -1,12 +1,19 @@
 import "./FoodItem.css";
 import { assets } from "../../assets/assets";
-import { useContext } from "react";
+import { useContext, useState } from "react";
 import { StoreContext } from "../../context/StoreContext";
 import { Link } from "react-router-dom";
+import ProductInfo from "../ProductInfo/ProductInfo";
 
 const FoodItem = ({ id, name, adminName, price, description, image }) => {
   const { cartItems, addToCart, removeFromCart, url } =
     useContext(StoreContext);
+
+  const [viewClick, setViewClick] = useState(false);
+
+  function clickHandler() {
+    setViewClick(true);
+  }
 
   return (
     <div className="food-item">
@@ -50,7 +57,7 @@ const FoodItem = ({ id, name, adminName, price, description, image }) => {
         <div className="food-item-btn">
           <p className="food-item-price">1 kg - Rs. {price}.00</p>
           <Link to={`/product-info/${id}`} className="food-item-link">
-            <button>View</button>
+            <button onClick={clickHandler}>View</button>
           </Link>
         </div>
       </div>

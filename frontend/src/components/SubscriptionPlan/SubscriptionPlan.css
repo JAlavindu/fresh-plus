@@ -8,7 +8,7 @@
 .subscription-plan {
   padding: 20px;
   border-radius: 25px;
-  width: 400px;
+  width: 300px;
   margin: 30px;
   height: 100%;
   text-align: center;
@@ -35,7 +35,7 @@
 
 .subscription-plan p {
   font-weight: bold;
-  font-size: 25px;
+  font-size: 20px;
   line-height: 1.5;
 }
 
@@ -63,13 +63,19 @@
 .subscription-plan button:hover {
   background-color: #218838;
 }
+.explore-menu-list-item .validity {
+  color: red;
+}
 
 @media (max-width: 768px) {
   .subs-container {
     grid-template-columns: repeat(1, 1fr);
+    row-gap: 20px;
   }
   .subscription-plan {
     width: 300px;
+    margin-bottom: 25px;
+    margin-top: 25px;
   }
 }
 
@@ -80,8 +86,4 @@
   .subscription-plan {
     width: 300px;
   }
-}
-
-.explore-menu-list-item .validity {
-  color: red;
 }
