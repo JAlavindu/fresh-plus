@@ -1,6 +1,6 @@
 import React, { useContext } from "react";
 import "./Sidebar.css";
-import { assets } from "../../assets/assets";
+import { assets } from "../../farmer-assets/assets";
 import { NavLink } from "react-router-dom";
 import { StoreContext } from "../../context/StoreContext";
 
@@ -15,15 +15,19 @@ const Sidebar = () => {
     <div className="sidebar">
       <div className="sidebar-options">
         <NavLink to="/add" className="sidebar-option">
-          <img src={assets.add_icon} alt="Add Product" />
+          <img src={assets.add} alt="Add Product" />
           <p>Add Product</p>
         </NavLink>
+        <NavLink to="/add-subscription" className="sidebar-option">
+          <img src={assets.add} alt="Add Subscription" />
+          <p>Add Subscription</p>
+        </NavLink>
         <NavLink to="/list" className="sidebar-option">
-          <img src={assets.order_icon} alt="List Products" />
+          <img src={assets.list} alt="List Products" />
           <p>List Products</p>
         </NavLink>
         <NavLink to="/orders" className="sidebar-option">
-          <img src={assets.add_icon} alt="Orders" />
+          <img src={assets.orders} alt="Orders" />
           <p>Orders</p>
         </NavLink>
       </div>

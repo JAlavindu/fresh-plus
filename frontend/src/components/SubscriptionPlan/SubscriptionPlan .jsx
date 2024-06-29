@@ -79,6 +79,7 @@ const SubscriptionPlan = () => {
               <h2>{subscription.name} Subscription</h2>
               <p>From {subscription.adminName} Store</p>
               <p>{subscription.description}</p>
+              <p>Valid for {subscription.validity} days</p>
               <p>Rs.{subscription.price}.00</p>
               {isEnrolled(subscription._id) ? (
                 <button className="activeBtn" disabled>

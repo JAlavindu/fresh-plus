@@ -10,12 +10,13 @@ const addSubscription = async (req, res) => {
   const admin = await adminModel.findById(req.body.userId);
 
   try {
-    console.log(admin.name);
+    // console.log(admin.name);
     const newSubscription = new subscriptionModel({
       adminId: req.body.userId,
       adminName: admin.name,
       name: req.body.name,
       description: req.body.description,
+      validity: req.body.validity,
       price: req.body.price,
     });
 
@@ -31,6 +32,7 @@ const addSubscription = async (req, res) => {
         [savedItem._id]: {
           name: savedItem.name,
           description: savedItem.description,
+          validity: savedItem.validity,
           price: savedItem.price,
         },
       };

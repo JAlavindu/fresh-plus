@@ -4,7 +4,7 @@ import { useContext } from "react";
 import { StoreContext } from "../../context/StoreContext";
 import { Link } from "react-router-dom";
 
-const FoodItem = ({ id, name, price, description, image }) => {
+const FoodItem = ({ id, name, adminName, price, description, image }) => {
   const { cartItems, addToCart, removeFromCart, url } =
     useContext(StoreContext);
 
@@ -44,13 +44,18 @@ const FoodItem = ({ id, name, price, description, image }) => {
           <p>{name}</p>
           <img src={assets.rating_starts} alt="" />
         </div>
+        <p className="food-item-desc">From {adminName}</p>
         <p className="food-item-desc">{description}</p>
+<<<<<<< HEAD
         <p className="food-item-price">Rs. {price}</p>
         <div className="food-item-btn">
           <Link to={`/product-info/${id}`}>
             <button>View</button>
           </Link>
         </div>
+=======
+        <p className="food-item-price">1 kg - Rs. {price}.00</p>
+>>>>>>> 254370b68fba2835ef4fc1ac9b8c6cb8c6c5449a
       </div>
     </div>
   );

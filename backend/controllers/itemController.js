@@ -11,8 +11,12 @@ const addItem = async (req, res) => {
         // console.log("Request Body:", req.body);
         // console.log("Uploaded File:", req.file);
         // Create a new item based on the request body
+        const admin = await adminModel.findById(req.body.userId);
+        const adminName = admin.name;
+
         const newItem = new itemModel({
             adminId: req.body.userId,
+            adminName: adminName,
             name: req.body.name,
             description: req.body.description,
             price: req.body.price,
@@ -25,7 +29,6 @@ const addItem = async (req, res) => {
         const savedItem = await newItem.save();
 
         // Update the admin's products field with the new item
-        const admin = await adminModel.findById(req.body.userId);
         if (admin) {
             admin.products = {
                 ...admin.products,

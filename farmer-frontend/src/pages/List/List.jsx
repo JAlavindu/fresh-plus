@@ -117,9 +117,14 @@ const List = ({ url }) => {
               <p>{item.category}</p>
               <p>{item.amount}</p>
               <p>Rs.{item.price}</p>
-              <p onClick={() => removeItem(item._id)} className="cursor">
-                X
-              </p>
+              <div className="actions">
+                <p onClick={() => removeItem(item._id)} className="cursor">
+                  Edit
+                </p>
+                <p onClick={() => removeItem(item._id)} className="cursor">
+                  Remove
+                </p>
+              </div>
             </div>
           ))}
         </div>
@@ -128,10 +133,11 @@ const List = ({ url }) => {
       <div className="list add flex-col">
         <p>All Subscriptions</p>
         <div className="list-table">
-          <div className="list-table-format title">
+          <div className="list-table-format-subscription title">
             <b>Image</b>
             <b>Name</b>
             <b>Description</b>
+            <b>Validity</b>
             <b>Price</b>
             <b>Date</b>
             <b>Action</b>
@@ -139,20 +145,27 @@ const List = ({ url }) => {
           {subscriptions.map((item, index) => {
             const { date, time } = formatDateTime(item.date);
             return (
-              <div key={index} className="list-table-format">
+              <div key={index} className="list-table-format-subscription">
                 <img src={assets.parcel_icon} alt={item.name} />
                 <p>{item.name}</p>
                 <p>{item.description}</p>
+                <p>{item.validity} days</p>
                 <p>Rs.{item.price}</p>
                 <p>{date}</p>
-                <p
-                  onClick={() => {
-                    removeSubscription(item._id);
-                  }}
-                  className="cursor"
-                >
-                  X
-                </p>
+                <div className="actions">
+                  <p
+                    onClick={() => removeSubscription(item._id)}
+                    className="cursor"
+                  >
+                    Edit
+                  </p>
+                  <p
+                    onClick={() => removeSubscription(item._id)}
+                    className="cursor"
+                  >
+                    Remove
+                  </p>
+                </div>
               </div>
             );
           })}

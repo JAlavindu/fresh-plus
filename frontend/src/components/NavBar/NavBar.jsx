@@ -79,7 +79,11 @@ const NavBar = ({ setShowLogin, userName }) => {
           <button onClick={() => setShowLogin(true)}>Sign in</button>
         ) : (
           <div className="navbar-profile">
+<<<<<<< HEAD
             <img src={assets.profile_icon} alt="" srcSet="" />
+=======
+            <img src={assets.profile_icon} alt="" />
+>>>>>>> 254370b68fba2835ef4fc1ac9b8c6cb8c6c5449a
             <ul className="navbar-profile-dropdown">
               <li
                 onClick={() => {

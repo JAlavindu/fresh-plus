@@ -48,7 +48,7 @@ const MySubscription = () => {
       <div className="container">
         {data.map((subscription, index) => {
           const { date, time } = formatDateTime(subscription.date);
-          const newDate = addDays(subscription.date, 90);
+          const newDate = addDays(subscription.date, subscription.validity);
 
           return (
             <div key={index} className="my-subscriptions-subscription">

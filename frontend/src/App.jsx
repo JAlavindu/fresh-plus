@@ -9,6 +9,8 @@ import LoginPopup from "./components/Login/LoginPopup";
 import Verify from "./pages/verify/Verify";
 import MyOrders from "./pages/MyOrders/MyOrders";
 import ProductInfo from "./components/ProductInfo/ProductInfo";
+import MySubscription from "./pages/MySubscription/MySubscription";
+import VerifySubscription from "./pages/VerifySubscription/VerifySubscription";
 
 const App = () => {
   const [showLogin, setShowLogin] = useState(false);
@@ -34,6 +36,8 @@ const App = () => {
           <Route path="/verify" element={<Verify />} />
           <Route path="/myorders" element={<MyOrders />} />
           <Route path="/product-info/:id" element={<ProductInfo />} />
+          <Route path="/my-subscriptions" element={<MySubscription />} />
+          <Route path="/verifySubscription" element={<VerifySubscription />} />
         </Routes>
       </div>
       <Footer />

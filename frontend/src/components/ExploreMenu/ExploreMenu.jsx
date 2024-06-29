@@ -4,6 +4,7 @@ import "./ExploreMenu.css";
 
 const ExploreMenu = ({ setSelectedAdmin, setClickedAll }) => {
   const [admins, setAdmins] = useState([]);
+  const [activeAdminId, setActiveAdminId] = useState(null);
 
   useEffect(() => {
     async function fetchAdmins() {
@@ -20,22 +21,39 @@ const ExploreMenu = ({ setSelectedAdmin, setClickedAll }) => {
     fetchAdmins();
   }, []);
 
+  const handleAdminClick = (admin) => {
+    setSelectedAdmin(admin);
+    setActiveAdminId(admin._id);
+    setClickedAll(false);
+  };
+
   return (
     <div className="explore-menu" id="explore-menu">
+      <div className="center">
+        <button
+          onClick={() => {
+            setClickedAll(true);
+            setActiveAdminId(null);
+          }}
+        >
+          View All Products
+        </button>
+        <br />
+        <br />
+      </div>
       <h1>Explore Farmers</h1>
       <div className="explore-menu-list">
         {admins.map((admin) => (
           <div
             key={admin._id}
-            className="explore-menu-list-item"
-            onClick={() => setSelectedAdmin(admin)}
+            className={`explore-menu-list-item ${
+              admin._id === activeAdminId ? "active" : ""
+            }`}
+            onClick={() => handleAdminClick(admin)}
           >
-            <p onClick={() => setClickedAll(false)}>{admin.name}</p>
+            <p>{admin.name}</p>
           </div>
         ))}
-      </div>
-      <div className="center">
-        <button onClick={() => setClickedAll(true)}>All</button>
       </div>
       <hr />
     </div>
