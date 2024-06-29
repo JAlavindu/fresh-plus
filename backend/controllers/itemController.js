@@ -52,7 +52,79 @@ const addItem = async (req, res) => {
         console.log(error);
         res.json({success: false, message: "Error"})
     }
+}
 
+const updateItem = async (req, res) => {
+  try {
+    console.log(req.body);
+    const { userId, itemId, name, description, price, category, amount } = req.body;
+    const admin = await adminModel.findById(userId);
+    console.log(itemId);
+
+    if (!admin) {
+      return res.status(404).json({ success: false, message: "Admin not found" });
+    }
+
+    const item = await itemModel.findById(itemId);
+
+    if (!item) {
+      return res.status(404).json({ success: false, message: "Item not found" });
+    }
+
+    // Update item properties
+    item.name = name || item.name;
+    item.description = description || item.description;
+    item.price = price || item.price;
+    item.category = category || item.category;
+    item.amount = amount || item.amount;
+
+    // Save the updated item to the database
+    const updatedItem = await item.save();
+
+    // Ensure admin.products is an object and not undefined
+    if (!admin.products) {
+      admin.products = {};
+    }
+
+    // Update the admin's products field with the updated item
+    admin.products = {
+      ...admin.products,
+      [itemId]: {
+        name: updatedItem.name,
+        amount: updatedItem.amount,
+        price: updatedItem.price,
+        category: updatedItem.category,
+        date: updatedItem.date,
+        image: updatedItem.image
+      },
+    };
+
+    // Save the updated admin document
+    await admin.save();
+
+    // Respond with success message
+    res.json({ success: true, message: "Product updated!" });
+  } catch (error) {
+    console.log(error);
+    res.status(500).json({ success: false, message: "Error updating product" });
+  }
+};
+
+
+const getItem = async (req, res) => {
+    try {
+        const item = await itemModel.findById(req.body.itemId);
+
+        if (item) {
+            res.json({ success: true, data: item });
+        } else {
+            res.json({ success: false, message: "item not found" });
+        }
+        
+    } catch (error) {
+        console.log(error);
+        res.json({success:false, message:"Error"})
+    }
 }
 
 // get admin items
@@ -172,4 +244,4 @@ const removeItem = async (req, res) => {
   
 
 
-export {addItem, getItems ,removeItem, getIemsByAdminId, getAllItems, searchItems}
+export {addItem, updateItem, getItem, getItems ,removeItem, getIemsByAdminId, getAllItems, searchItems}
