@@ -5,6 +5,7 @@ import { addItem, getItem, searchItems, updateItem } from "../controllers/itemCo
 
 const itemRouter = express.Router();
 
+//http://localhost:4000/api/item/
 itemRouter.post("/add-item", authMiddleWare, addItem);
 itemRouter.post("/get-item", getItem);
 itemRouter.post("/update-item", authMiddleWare, updateItem);

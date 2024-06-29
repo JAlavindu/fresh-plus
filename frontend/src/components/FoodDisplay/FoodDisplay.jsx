@@ -50,6 +50,7 @@ const FoodDisplay = ({ selectedAdmin, clickedAll }) => {
     };
 
     fetchAdminItems();
+
     fetchAllProducts();
   }, [selectedAdmin, url]);
 

@@ -59,6 +59,18 @@
 .food-item-link {
   display: grid;
 }
+
+.food-item-link button{
+  justify-self: center;
+  align-self: center;
+  width: 100%;
+  background-color: #3fc01f;
+  color: white;
+  padding: 10px 20px;
+  border: none;
+  cursor: pointer;
+  border-radius: 15px;
+}
 .food-item-btn button {
   justify-self: center;
   align-self: center;

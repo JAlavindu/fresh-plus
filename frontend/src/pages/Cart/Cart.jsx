@@ -1,7 +1,6 @@
 import React, { useContext } from "react";
 import "./Cart.css";
 import { StoreContext } from "../../context/StoreContext";
-import { food_list } from "../../assets/assets";
 import { useNavigate } from "react-router-dom";
 
 const Cart = () => {
@@ -16,24 +15,34 @@ const Cart = () => {
         <div className="cart-items-title">
           <p>Items</p>
           <p>Title</p>
-          <p>Price</p>
-          <p>Quantity (kg)</p>
+          <p>Price (1 kg)</p>
+          <p>Quantity (g)</p>
           <p>Total</p>
           <p>Remove</p>
         </div>
         <br />
         <hr />
-        {food_list.map((item, index) => {
-          if (cartItems[item._id] > 0) {
+        {Object.keys(cartItems).map((key) => {
+          const [itemId, weight] = key.split("-");
+          const item = food_list.find((product) => product._id === itemId);
+          if (cartItems[key] > 0) {
+            const quantity = cartItems[key];
+            const totalWeight = weight * quantity;
+            const totalPrice = (item.price * totalWeight) / 1000;
             return (
-              <div>
+              <div key={key}>
                 <div className="cart-items-title cart-items-item">
-                  <img src={url + "/images/" + item.image} alt="" />
+                  <img src={`${url}/images/${item.image}`} alt={item.name} />
                   <p>{item.name}</p>
                   <p>Rs.{item.price}</p>
-                  <p>{cartItems[item._id]}</p>
-                  <p>Rs.{item.price * cartItems[item._id]}</p>
-                  <p onClick={() => removeFromCart(item._id)} className="cross">
+                  <p>
+                    {weight}g x {quantity}
+                  </p>
+                  <p>Rs.{totalPrice}</p>
+                  <p
+                    onClick={() => removeFromCart(itemId, Number(weight))}
+                    className="cross"
+                  >
                     X
                   </p>
                 </div>
@@ -41,6 +50,7 @@ const Cart = () => {
               </div>
             );
           }
+          return null;
         })}
       </div>
       <div className="cart-bottom">
@@ -60,7 +70,7 @@ const Cart = () => {
             <div className="cart-total-details">
               <b>Total</b>
               <b>
-                ${getTotalCartAmount() === 0 ? 0 : getTotalCartAmount() + 200}
+                Rs.{getTotalCartAmount() === 0 ? 0 : getTotalCartAmount() + 200}
               </b>
             </div>
             <hr />

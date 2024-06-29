@@ -190,7 +190,7 @@ const removeItem = async (req, res) => {
 
 
   // get items by admin id
-  const getIemsByAdminId = async(req, res) => {
+  const getItemsByAdminId = async(req, res) => {
     try {
       const items = await itemModel.find({ adminId: req.params.adminId });
       res.json({ success: true, data: items });
@@ -244,4 +244,4 @@ const removeItem = async (req, res) => {
   
 
 
-export {addItem, updateItem, getItem, getItems ,removeItem, getIemsByAdminId, getAllItems, searchItems}
+export {addItem, updateItem, getItem, getItems ,removeItem, getItemsByAdminId, getAllItems, searchItems}

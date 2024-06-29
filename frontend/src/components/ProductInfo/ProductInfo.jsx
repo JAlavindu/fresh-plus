@@ -1,122 +1,131 @@
-import React from "react";
+import React, { useContext, useEffect, useState } from "react";
 import "./ProductInfo.css";
-import bananas from "./Bananas.jpeg";
 import FoodItem from "../FoodItem/FoodItem";
-import { useContext, useEffect, useState } from "react";
 import { StoreContext } from "../../context/StoreContext";
 import axios from "axios";
-import { assets } from "../../assets/assets";
+import { useParams } from "react-router-dom";
 
-const ProductInfo = ({ selectedAdmin }) => {
-  const { cartItems, addToCart, removeFromCart, food_list, url } =
-    useContext(StoreContext);
+const ProductInfo = () => {
+  const { id } = useParams();
+  const [item, setItem] = useState(null);
   const [adminItems, setAdminItems] = useState([]);
-
-  const [allProducts, setAllProducts] = useState([]);
-
-  const fetchAllProducts = async () => {
-    try {
-      const response = await axios.get(`${url}/api/admin/getAll`);
-      setAllProducts(response.data.data);
-    } catch (error) {
-      console.error("Error fetching  items:", error);
-    }
-  };
+  const [selectedWeight, setSelectedWeight] = useState(100);
+  const { cartItems, addToCart, removeFromCart, url } =
+    useContext(StoreContext);
 
   useEffect(() => {
-    const fetchAdminItems = async () => {
+    const fetchProductAndAdminItems = async () => {
       try {
-        if (selectedAdmin && selectedAdmin._id) {
-          const response = await axios.get(
-            `${url}/api/admin/get-items/${selectedAdmin._id}`
+        // Fetch the selected product
+        const productResponse = await axios.post(`${url}/api/item/get-item`, {
+          itemId: id,
+        });
+        const selectedItem = productResponse.data.data;
+        setItem(selectedItem);
+
+        // Fetch the products of the same admin
+        if (selectedItem && selectedItem.adminId) {
+          const adminItemsResponse = await axios.get(
+            `${url}/api/admin/get-items/${selectedItem.adminId}`
           );
-          setAdminItems(response.data.data);
+          setAdminItems(adminItemsResponse.data.data);
+          console.log("admin items", adminItemsResponse.data.data);
         }
       } catch (error) {
-        console.error("Error fetching admin items:", error);
+        console.error("Error fetching data:", error);
       }
     };
 
-    fetchAdminItems();
-    fetchAllProducts();
-  }, [selectedAdmin, url]);
+    fetchProductAndAdminItems();
+  }, [id, url]);
+
+  if (!item) {
+    return <div>Loading...</div>;
+  }
+
   return (
-    <>
+    <div>
       <div className="small-container">
         <div className="col-1">
-          {/* product image */}
-          <img src={bananas} alt="" id="ProductImg" />
+          <img
+            src={`${url}/images/${item.image}`}
+            alt={item.name}
+            id="ProductImg"
+          />
         </div>
         <div className="col-2">
-          <h1>Bananas</h1>
+          <h1>{item.name}</h1>
+          <br />
           <p>
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-            eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim
-            ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut
-            aliquip ex ea commodo consequat.
-          </p>
-          <h3>Rs.200</h3>
-          <select>
-            <option>Select weight</option>
-            <option value="100g">100g</option>
-            <option value="200g">200g</option>
-            <option value="250g">250g</option>
-            <option value="300g">300g</option>
-            <option value="400g">400g</option>
-            <option value="500g">500g</option>
-            <option value="1kg">1kg</option>
-            <option value="2kg">2kg</option>
+            <b>{item.description}</b> Lorem ipsum dolor, sit amet consectetur
+            adipisicing elit. Vero reiciendis commodi officiis eos atque totam
+            quod quam natus, ad corrupti!
+          </p>{" "}
+          <br />
+          <h3>Rs.{item.price}</h3>
+          <select
+            value={selectedWeight}
+            onChange={(e) => setSelectedWeight(Number(e.target.value))}
+          >
+            <option value={100}>100g</option>
+            <option value={200}>200g</option>
+            <option value={250}>250g</option>
+            <option value={300}>300g</option>
+            <option value={400}>400g</option>
+            <option value={500}>500g</option>
+            <option value={1000}>1kg</option>
+            <option value={2000}>2kg</option>
           </select>
-          <div className="box">
-            {/* quantity with adding option */}
-            {/* <div className="qty">
-              {!cartItems[id] ? (
-                <img
-                  className="add"
-                  src={assets.add_icon_white}
-                  alt=""
-                  onClick={() => addToCart(id)}
-                />
+          <div className="box-new">
+            <div className="qty-new">
+              {!cartItems[`${id}-${selectedWeight}`] ? (
+                <button
+                  className="add-new"
+                  type="button"
+                  onClick={() => addToCart(id, selectedWeight)}
+                >
+                  Add Item
+                </button>
               ) : (
-                <div className="food-item-counter">
-                  <img
-                    src={assets.remove_icon_red}
-                    alt=""
-                    onClick={() => removeFromCart(id)}
-                  />
-                  <p>{cartItems[id]}</p>
-                  <img
-                    src={assets.add_icon_green}
-                    alt=""
-                    onClick={() => addToCart(id)}
-                  />
+                <div className="food-item-counter-new">
+                  <button
+                    className="remove-new"
+                    type="button"
+                    onClick={() => removeFromCart(id, selectedWeight)}
+                  >
+                    Remove Item
+                  </button>
+                  <p>{cartItems[`${id}-${selectedWeight}`]}</p>
+                  <button
+                    className="add-new"
+                    type="button"
+                    onClick={() => addToCart(id, selectedWeight)}
+                  >
+                    Add Item
+                  </button>
                 </div>
               )}
-            </div> */}
-
-            <button type="button">Add Item</button>
+            </div>
           </div>
         </div>
-
-        {/* farmer other products needs to be visible */}
-
-        {/* <div className="food-display">
-          Products of {selectedAdmin.name}
-          <div className="food-display-list">
-            {adminItems.map((item) => (
-              <FoodItem
-                key={item._id}
-                id={item._id}
-                name={item.name}
-                description={item.description}
-                price={item.price}
-                image={item.image}
-              />
-            ))}
-          </div>
-        </div> */}
       </div>
-    </>
+      <div className="">
+        <h2 className="more-title">More from {item.adminName}</h2>
+        <div className="related-products">
+          {adminItems.map((adminItem) => (
+            <FoodItem
+              key={adminItem._id}
+              id={adminItem._id}
+              name={adminItem.name}
+              adminName={adminItem.adminName}
+              description={adminItem.description}
+              price={adminItem.price}
+              image={adminItem.image}
+            />
+          ))}
+        </div>
+      </div>
+    </div>
   );
 };
 
