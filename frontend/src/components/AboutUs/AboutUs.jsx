@@ -9,7 +9,7 @@ function AboutUs() {
         <h2>AboutUs</h2>
       </div>
 
-      <div className="body">
+      <div className="mid">
         <div className="box1">
           <img src={assets.hand}></img>
         </div>

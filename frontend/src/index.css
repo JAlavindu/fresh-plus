@@ -24,3 +24,11 @@ a {
     opacity: 1;
   }
 }
+
+@media (max-width: 425px) {
+  .app {
+    width: 95%;
+    position: relative;
+    left: 200px;
+  }
+}

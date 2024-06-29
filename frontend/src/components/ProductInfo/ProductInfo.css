@@ -1,0 +1,82 @@
+.small-container {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  justify-items: end;
+  align-items: center;
+  justify-content: start;
+  column-gap: 20px;
+}
+
+.small-container .col-1 img {
+  justify-self: center;
+  align-self: center;
+  width: 100%;
+  height: 300px;
+}
+
+.small-container .col-2 {
+  justify-self: start;
+  align-self: start;
+}
+
+.small-container .col-2 h1 {
+  font-size: 50px;
+  font-weight: 700;
+  color: #3fc01f;
+}
+
+.small-container .col-2 p {
+  margin-top: 10px;
+  font-size: 15px;
+  font-weight: 400;
+  width: 70%;
+}
+
+.small-container select {
+  border: none;
+  cursor: pointer;
+  padding: 0;
+}
+
+.small-container .col-2 h3 {
+  margin-top: 10px;
+  margin-bottom: 10px;
+}
+
+.small-container .col-2 .box {
+  display: grid;
+  grid-template-columns: repeat(2, 200px);
+  text-align: end;
+  margin-top: 20px;
+}
+
+.small-container .col-2 button {
+  justify-self: end;
+  background: #3fc01f;
+  color: white;
+  padding: 10px 20px;
+  cursor: pointer;
+  border: none;
+  cursor: pointer;
+  border-radius: 15px;
+}
+
+.small-container .col-2 p {
+  justify-self: start;
+}
+
+.small-container .food-display {
+  margin-top: 30px;
+}
+.small-container .food-display h1 {
+  text-align: center;
+  color: #262626;
+  font-weight: 500;
+}
+.small-container .food-display-list {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+  margin: top 30px;
+  gap: 30px;
+  row-gap: 30px;
+}
