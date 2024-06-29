@@ -76,32 +76,31 @@ const SubscriptionPlan = () => {
         {subscriptions.map((subscription) => (
           <div className="subscription-plan" key={subscription._id}>
             <div className="explore-menu-list-item">
-              <div className="subscription-details">
-                <h2>{subscription.name} Subscription</h2>
-                <p>From {subscription.adminName} Store</p>
-                <p>{subscription.description}</p>
-                <p>Valid for {subscription.validity} days</p>
-                <p>Rs.{subscription.price}.00</p>
-              </div>
-              <div className="subscription-button">
-                {isEnrolled(subscription._id) ? (
-                  <button className="activeBtn" disabled>
-                    Active{" "}
-                  </button>
-                ) : (
-                  <button
-                    onClick={() =>
-                      handlePurchase(
-                        subscription._id,
-                        subscription.price,
-                        subscription.name
-                      )
-                    }
-                  >
-                    Purchase Plan
-                  </button>
-                )}
-              </div>
+              <h2>{subscription.name} Subscription</h2>
+              <p>From {subscription.adminName} Store</p>
+              <p>{subscription.description}</p>
+              <p className="validity">
+                {subscription.validityDescription} - Valid for{" "}
+                {subscription.validity} days
+              </p>
+              <p>Rs.{subscription.price}.00</p>
+              {isEnrolled(subscription._id) ? (
+                <button className="activeBtn" disabled>
+                  Active{" "}
+                </button>
+              ) : (
+                <button
+                  onClick={() =>
+                    handlePurchase(
+                      subscription._id,
+                      subscription.price,
+                      subscription.name
+                    )
+                  }
+                >
+                  Purchase Plan
+                </button>
+              )}
             </div>
           </div>
         ))}

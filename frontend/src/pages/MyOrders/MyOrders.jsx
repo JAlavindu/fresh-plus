@@ -37,9 +37,9 @@ const MyOrders = () => {
               <p>
                 {order.items.map((item, index) => {
                   if (index === order.items.length - 1) {
-                    return item.name + " x " + item.quantity;
+                    return item.name + " x " + item.quantity + " kg";
                   } else {
-                    return item.name + " x " + item.quantity + ", ";
+                    return item.name + " x " + item.quantity + " kg,  ";
                   }
                 })}
               </p>

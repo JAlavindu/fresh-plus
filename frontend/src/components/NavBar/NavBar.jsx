@@ -15,6 +15,8 @@ const NavBar = ({ setShowLogin, userName }) => {
   const [modal1IsOpen, setModal1IsOpen] = useState(false);
   const [modal2IsOpen, setModal2IsOpen] = useState(false);
 
+  const [showNewPwdField, setShowNewPwdField] = useState(false);
+
   const [data, setData] = useState({
     name: "",
     email: "",
@@ -39,7 +41,7 @@ const NavBar = ({ setShowLogin, userName }) => {
       password: data.newPwd,
     };
 
-    if (data.oldPwd && !data.newPwd) {
+    if (data.oldPwd && data.newPwd) {
       try {
         let response = await axios.post(
           url + "/api/user/compare-pwd",
@@ -69,24 +71,45 @@ const NavBar = ({ setShowLogin, userName }) => {
       } catch (error) {
         alert("Old password is wrong");
       }
-    } else if (!data.newPwd && !data.oldPwd) {
+    } else if (!data.newPwd && data.oldPwd) {
       try {
         let response = await axios.post(
-          url + "/api/user/update-user",
-          saveData,
+          url + "/api/user/compare-pwd",
+          { password: data.oldPwd },
           {
             headers: { token },
           }
         );
 
         if (response.data.success) {
-          alert(`${response.data.message}`);
-          window.location.reload("/");
-        } else {
-          alert(`${response.data.message}`);
+          let saveData = {
+            name: data.name,
+            email: data.email,
+            oldPwd: data.oldPwd,
+            password: data.oldPwd,
+          };
+
+          try {
+            let response = await axios.post(
+              url + "/api/user/update-user",
+              saveData,
+              {
+                headers: { token },
+              }
+            );
+
+            if (response.data.success) {
+              alert(`${response.data.message}`);
+              window.location.reload("/");
+            } else {
+              alert(`${response.data.message}`);
+            }
+          } catch (error) {
+            alert(error);
+          }
         }
       } catch (error) {
-        alert("Passwords don't match");
+        alert("Old Password is wrong");
       }
     }
     window.location.reload("/");
@@ -281,15 +304,26 @@ const NavBar = ({ setShowLogin, userName }) => {
                       placeholder="old password"
                       required
                     />
-                    <input
-                      name="newPwd"
-                      onChange={onChangeHandler}
-                      value={data.newPwd}
-                      type="text"
-                      placeholder="new password"
-                    />
+                    {showNewPwdField && (
+                      <input
+                        name="newPwd"
+                        onChange={onChangeHandler}
+                        value={data.newPwd}
+                        type="text"
+                        placeholder="new password"
+                      />
+                    )}
                     <button className="modal-close-button" type="submit">
                       Save
+                    </button>
+                    <button
+                      className="modal-close-button"
+                      type="button"
+                      onClick={() => setShowNewPwdField(!showNewPwdField)}
+                    >
+                      {showNewPwdField
+                        ? "Hide New Password"
+                        : "Update Password"}
                     </button>
                     <button
                       className="modal-close-button"

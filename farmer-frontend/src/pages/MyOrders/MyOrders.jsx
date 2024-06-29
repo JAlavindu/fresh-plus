@@ -8,6 +8,8 @@ import formatDateTime from "../../utils/formatDateTime";
 
 const MyOrders = ({ url }) => {
   const [data, setData] = useState([]);
+  const [subscriptions, setSubscriptions] = useState([]);
+
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const { token } = useContext(StoreContext);
@@ -30,9 +32,26 @@ const MyOrders = ({ url }) => {
     }
   };
 
+  // API call to fetch orders
+  const fetchSubscriptions = async () => {
+    try {
+      const response = await axios.post(
+        url + "/api/subscription/admin-subscriptions",
+        {},
+        {
+          headers: { token },
+        }
+      );
+      setSubscriptions(response.data.data);
+    } catch (error) {
+      setError(error);
+    }
+  };
+
   useEffect(() => {
     if (token) {
       fetchOrders();
+      fetchSubscriptions();
     }
   }, [token]);
 
@@ -98,11 +117,45 @@ const MyOrders = ({ url }) => {
               >
                 {order.status === "On Delivery"
                   ? "On Delivery"
-                  : "Deliver Order"}
+                  : "Confirm Order"}
               </button>
             </div>
           );
         })}
+      </div>
+      <br />
+      <br />
+      <h2>My Subscriptions</h2>
+      <br />
+      <div className="subscription-container">
+        {subscriptions
+          .filter((subscription) => subscription.users.length > 0)
+          .map((subscription, index) => {
+            const { date, time } = formatDateTime(subscription.date);
+            return (
+              <div key={index} className="my-orders-order">
+                <img src={assets.parcel_icon} alt="" />
+                <p>{subscription.name}</p>
+                <p>Items: {subscription.description}</p>
+                <p>Rs.{subscription.price}.00</p>
+                <p>{date}</p>
+                <p>{subscription.validityDescription}</p>
+                <p>
+                  <span>&#x25cf;</span>{" "}
+                  <b>{subscription.validity} days validity</b>
+                </p>
+                <div className="subscription-users">
+                  <h3>Subscribed Users:</h3>
+                  {subscription.users.map((userId, userIndex) => (
+                    <p key={userIndex}>User ID: {userId}</p>
+                  ))}
+                </div>
+                {/* <button onClick={() => calculateDeliveryInfo(subscription._id)}>
+                  Confirm Subscription
+                </button> */}
+              </div>
+            );
+          })}
       </div>
       <Modal
         isOpen={modalIsOpen}

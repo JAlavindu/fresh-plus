@@ -7,6 +7,7 @@ const subscriptionSchema = new mongoose.Schema({
     description: {type: String, required: true},
     price: {type: Number, required: true},
     validity: {type: Number, required: true},
+    validityDescription: {type: String, required: true},
     date: {type: Date, default: Date.now()},
     users: {type: Object, default:{}}
     // payment: {type: Boolean, default: false},
