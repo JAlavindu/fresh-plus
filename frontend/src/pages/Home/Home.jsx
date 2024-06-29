@@ -1,4 +1,4 @@
-import { React, useContext, useState } from "react";
+import React, { useContext, useState } from "react";
 import "./Home.css";
 import Header from "../../components/Header/Header.jsx";
 import ExploreMenu from "../../components/ExploreMenu/ExploreMenu.jsx";
@@ -22,7 +22,6 @@ const Home = ({ setShowLogin, setUserName }) => {
 
       {!token ? (
         <div>
-          {/* <button onClick={() => setShowLogin(true)}>Sign in</button> */}
           <Details />
           <HowItWorks />
           <AboutUs />

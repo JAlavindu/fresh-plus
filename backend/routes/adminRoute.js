@@ -1,7 +1,7 @@
 import express from "express"
 import { adminName, getAdmin, getAllAdmins, loginUser, registerUser } from "../controllers/adminController.js"
 import authMiddleWare from "../middleware/auth.js"
-import { addItem, getAllItems, getIemsByAdminId, getItems, removeItem } from "../controllers/itemController.js"
+import { addItem, getAllItems, getItemsByAdminId, getItems, removeItem } from "../controllers/itemController.js"
 import multer from "multer";
 import { addSubscription } from "../controllers/subscriptionController.js";
 import { calculateDistance } from "../controllers/locationController.js";
@@ -29,7 +29,7 @@ adminRouter.post("/add-item", upload.single("image"), authMiddleWare, addItem)
 adminRouter.post("/add-subscription", upload.none(), authMiddleWare, addSubscription)
 adminRouter.post("/get-items", authMiddleWare, getItems)
 adminRouter.post("/remove-item", authMiddleWare, removeItem)
-adminRouter.get("/get-items/:adminId", getIemsByAdminId)
+adminRouter.get("/get-items/:adminId", getItemsByAdminId)
 adminRouter.get("/getAll", getAllItems)
 
 // location

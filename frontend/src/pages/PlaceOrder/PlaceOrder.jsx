@@ -25,38 +25,35 @@ const PlaceOrder = () => {
   const onChangeHandler = (event) => {
     const name = event.target.name;
     const value = event.target.value;
-
-    setData((data) => ({ ...data, [name]: value }));
+    setData((prevData) => ({ ...prevData, [name]: value }));
   };
-
-  // useEffect(() => {
-  //   console.log(data);
-  // }, [data]);
 
   const placeOrder = async (event) => {
     event.preventDefault();
 
     let orderItems = [];
-
     let adminId = null;
 
-    food_list.map((item) => {
-      if (cartItems[item._id] > 0) {
+    Object.keys(cartItems).forEach((key) => {
+      const [itemId, weight] = key.split("-");
+      const item = food_list.find((product) => product._id === itemId);
+      if (cartItems[key] > 0) {
         if (!adminId) {
           adminId = item.adminId;
         } else if (item.adminId !== adminId) {
-          alert("Select items from the same farmer !");
+          alert("Select items from the same farmer!");
           setCartItems({});
           window.location.replace("/"); // Redirect to home
           return; // Stop further execution
         }
-        let itemInfo = item;
-        itemInfo["quantity"] = cartItems[item._id];
+        let itemInfo = {
+          ...item,
+          quantity: cartItems[key],
+          weight: Number(weight),
+        };
         orderItems.push(itemInfo);
       }
     });
-
-    // console.log(orderItems);
 
     let orderData = {
       adminId: adminId,
@@ -65,17 +62,20 @@ const PlaceOrder = () => {
       amount: getTotalCartAmount() + 200,
     };
 
-    console.log(adminId);
+    try {
+      let response = await axios.post(url + "/api/order/place", orderData, {
+        headers: { token },
+      });
 
-    let response = await axios.post(url + "/api/order/place", orderData, {
-      headers: { token },
-    });
-
-    if (response.data.success) {
-      const { session_url } = response.data;
-      window.location.replace(session_url);
-    } else {
-      alert("Error");
+      if (response.data.success) {
+        const { session_url } = response.data;
+        window.location.replace(session_url);
+      } else {
+        alert("Error placing order");
+      }
+    } catch (error) {
+      console.error("Error placing order:", error);
+      alert("An error occurred. Please try again.");
     }
   };
 
@@ -85,7 +85,7 @@ const PlaceOrder = () => {
     } else if (getTotalCartAmount() === 0) {
       navigate("/cart");
     }
-  }, [token]);
+  }, [token, getTotalCartAmount, navigate]);
 
   return (
     <form onSubmit={placeOrder} className="place-order">
@@ -114,7 +114,7 @@ const PlaceOrder = () => {
           onChange={onChangeHandler}
           value={data.email}
           type="email"
-          placeholder="email address"
+          placeholder="Email address"
           required
         />
         <input
@@ -122,7 +122,7 @@ const PlaceOrder = () => {
           onChange={onChangeHandler}
           value={data.street}
           type="text"
-          placeholder="street"
+          placeholder="Street"
           required
         />
         <div className="multi-fields">
@@ -166,7 +166,7 @@ const PlaceOrder = () => {
           onChange={onChangeHandler}
           value={data.phone}
           type="text"
-          placeholder="phone"
+          placeholder="Phone"
           required
         />
       </div>

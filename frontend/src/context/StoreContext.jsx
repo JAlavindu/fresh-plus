@@ -19,28 +19,40 @@ const StoreContextProvider = ({ children }) => {
     loadData();
   }, []);
 
-  const addToCart = (itemId) => {
-    if (!cartItems[itemId]) {
-      setCartItems((prev) => ({ ...prev, [itemId]: 1 }));
-    } else {
-      setCartItems((prev) => ({ ...prev, [itemId]: prev[itemId] + 1 }));
-    }
+  const addToCart = (itemId, weight) => {
+    const key = `${itemId}-${weight}`;
+    setCartItems((prev) => ({
+      ...prev,
+      [key]: (prev[key] || 0) + 1, // Increment the quantity for the selected weight
+    }));
   };
 
-  const removeFromCart = (itemId) => {
-    setCartItems((prev) => ({ ...prev, [itemId]: prev[itemId] - 1 }));
+  const removeFromCart = (itemId, weight) => {
+    const key = `${itemId}-${weight}`;
+    setCartItems((prev) => {
+      const newCartItems = { ...prev };
+      if (newCartItems[key] > 1) {
+        newCartItems[key] -= 1;
+      } else {
+        delete newCartItems[key];
+      }
+      return newCartItems;
+    });
   };
 
   const getTotalCartAmount = () => {
     let totalAmount = 0;
-    for (const item in cartItems) {
-      if (cartItems[item] > 0) {
-        let itemInfo = food_list.find((product) => product._id === item);
-        totalAmount += itemInfo.price * cartItems[item];
+    for (const key in cartItems) {
+      const [itemId, weight] = key.split("-");
+      const itemInfo = food_list.find((product) => product._id === itemId);
+      if (itemInfo) {
+        const weightInKg = weight / 1000; // Convert weight from grams to kilograms
+        totalAmount += itemInfo.price * weightInKg * cartItems[key];
       }
     }
     return totalAmount;
   };
+
   const [food_list, setFoodList] = useState([]);
   const [admins, setAdmins] = useState([]);
 
