@@ -104,7 +104,6 @@ const FoodDisplay = ({ selectedAdmin, clickedAll }) => {
                   Close
                 </button>
               </div>
-              )
             </div>
           </Modal>
           <div className="food-display-list">

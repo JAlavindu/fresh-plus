@@ -46,16 +46,13 @@ const FoodItem = ({ id, name, adminName, price, description, image }) => {
         </div>
         <p className="food-item-desc">From {adminName}</p>
         <p className="food-item-desc">{description}</p>
-<<<<<<< HEAD
         <p className="food-item-price">Rs. {price}</p>
         <div className="food-item-btn">
-          <Link to={`/product-info/${id}`}>
+          <p className="food-item-price">1 kg - Rs. {price}.00</p>
+          <Link to={`/product-info/${id}`} className="food-item-link">
             <button>View</button>
           </Link>
         </div>
-=======
-        <p className="food-item-price">1 kg - Rs. {price}.00</p>
->>>>>>> 254370b68fba2835ef4fc1ac9b8c6cb8c6c5449a
       </div>
     </div>
   );

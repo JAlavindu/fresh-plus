@@ -47,14 +47,24 @@
   font-size: 1vw;
 }
 .header-contents button {
-  border: none;
+  /* border: none;
   background-color: none;
   color: #151414;
   font-weight: 500;
   padding: 1vw 2.3vw;
   background-color: white;
   font-size: max(1vw, 13px);
+  border-radius: 50px; */
+}
+.btn-header {
+  border: none;
+  color: #28a745;
+  font-weight: 500;
+  padding: 1vw 2.3vw;
+  background-color: white;
+  font-size: max(1vw, 13px);
   border-radius: 50px;
+  cursor: pointer;
 }
 .header-contents button:not(:last-child) {
   margin-right: 10px;
@@ -75,14 +85,19 @@
     padding: 2vw 4vw;
   }
 }
-
-.btn-header {
-  /* border: none;
-  color: white;
-  font-weight: 500;
-  padding: 1vw 2.3vw;
-  background-color: rgb(13, 218, 13);
-  font-size: max(1vw, 13px);
-  border-radius: 50px;
-  cursor: pointer; */
+@media (max-width: 430px) {
+  .header {
+    height: 50vh;
+  }
+  .header-contents {
+    max-width: 50%;
+    height: 60%;
+  }
+  .header-contents p {
+    display: none;
+  }
+  .header-contents button {
+    padding: 2vw 4vw;
+    margin-bottom: 5px;
+  }
 }
