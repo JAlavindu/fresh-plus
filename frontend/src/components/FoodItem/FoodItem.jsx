@@ -8,6 +8,8 @@ const FoodItem = ({ id, name, adminName, price, description, image }) => {
   const { cartItems, addToCart, removeFromCart, url } =
     useContext(StoreContext);
 
+  console.log(id);
+
   return (
     <div className="food-item">
       <div className="food-item-img-container">
@@ -46,13 +48,11 @@ const FoodItem = ({ id, name, adminName, price, description, image }) => {
         </div>
         <p className="food-item-desc">From {adminName}</p>
         <p className="food-item-desc">{description}</p>
-        <p className="food-item-price">Rs. {price}</p>
-        <div className="food-item-btn">
-          <p className="food-item-price">1 kg - Rs. {price}.00</p>
-          <Link to={`/product-info/${id}`} className="food-item-link">
-            <button>View</button>
-          </Link>
-        </div>
+        <p className="food-item-price">1 kg - Rs. {price}</p>
+
+        <Link to={`/product-info/${id}`} className="food-item-link">
+          <button>View</button>
+        </Link>
       </div>
     </div>
   );
