@@ -127,7 +127,7 @@ select {
     300px
   ); /* 3 items in a row with 300px each */
   gap: 20px; /* Space between items */
-  justify-content: center;
+  justify-content: flex-start;
 }
 
 .food-item {
@@ -154,5 +154,6 @@ select {
 
   .related-products {
     grid-template-columns: repeat(1, 300px);
+    justify-content: center;
   }
 }

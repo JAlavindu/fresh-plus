@@ -22,7 +22,6 @@ const Home = ({ setShowLogin, setUserName }) => {
 
       {!token ? (
         <div>
-          <FoodDisplay selectedAdmin={""} clickedAll={true} />
           <Details />
           <HowItWorks />
           <AboutUs />
