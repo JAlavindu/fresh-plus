@@ -1,148 +1,169 @@
+/* Container for My Orders section */
 .my-orders {
     margin: 50px 20px;
+    display: flex;
+    
+    flex-direction: row; /* Adjusted to row to include the sidebar */
+    gap: 20px;
 }
 
+/* Left Sidebar Styles */
+
+/* Main content container */
+.my-orders-content {
+    flex: 1; /* Take up remaining space */
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 20px;
+}
+
+/* Container for orders */
 .my-orders .container {
-   display: flex;
-   flex-direction: column;
-   gap: 20px;
-   margin-top: 30px;
-   padding: 10px;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    margin-top: 20px;
+    padding: 10px;
 }
 
+/* Order card layout */
 .my-orders-order {
-   display: grid;
-   grid-template-columns: 0.5fr 1fr 1fr 1fr 1fr 2fr 2fr 2fr;
-   align-items: center;
-   gap: 30px;
-   font-size: 14px;
-   padding: 10px;
-   color: #454545;
-   border: 1px solid tomato;
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr;
+    align-items: center;
+    gap: 10px;
+    font-size: 14px;
+    padding: 10px;
+    color: #454545;
+    border: 1px solid tomato;
+    border-radius: 8px; /* Added border radius for better look */
 }
 
+/* Subscription container layout */
 .subscription-container .my-orders-order {
-  display: grid;
-  grid-template-columns: 0.5fr 0.5fr 1fr 1fr 0.5fr 0.5fr 1fr 2.5fr;
-  align-items: center;
-  gap: 30px;
-  font-size: 14px;
-  padding: 10px;
-  color: #454545;
-  border: 1px solid tomato;
+    grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr 1fr 2fr;
 }
 
+/* Order image */
 .my-orders-order img {
     width: 50px;
+    height: 50px; /* Ensuring a consistent height */
 }
 
+/* Highlighted status */
 .my-orders-order p span {
     color: tomato;
 }
 
+/* Order text */
 .my-orders-order p b {
-   font-weight: 500;
-   color: #454545;
+    font-weight: 500;
+    color: #454545;
 }
 
+/* Order button styles */
 .my-orders-order button {
-   border: none;
-   margin: 0;
-   padding: 12px 10px;
-   border-radius: 4px;
-   background-color: #05cb23;
-   cursor: pointer;
+    border: none;
+    padding: 10px;
+    border-radius: 4px;
+    background-color: #05cb23;
+    cursor: pointer;
+    transition: background-color 0.3s;
+    margin: 0;
 }
-.my-orders-order button:hover {
-   background-color: #35d24d;
 
+.my-orders-order button:hover {
+    background-color: #35d24d;
+}
+
+.my-orders-order .order-delivered {
+    background-color: #0e5beb;
 }
 
 /* Modal overlay style */
 .modal-overlay {
-   position: fixed;
-   top: 0;
-   left: 0;
-   right: 0;
-   bottom: 0;
-   background-color: rgba(0, 0, 0, 0.75);
-   display: flex;
-   align-items: center;
-   justify-content: center;
- }
- 
- /* Modal content style */
- .modal {
-   background: white;
-   padding: 20px;
-   width: 800px;
-   margin: auto;
-   border-radius: 8px;
-   box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
-   animation: fadeIn 0.15s;
- }
- 
- .modal-content {
-   display: flex;
-   flex-direction: column;
-   align-items: center;
- }
- 
- /* Modal title style */
- .modal-title {
-   margin-bottom: 20px;
-   font-size: 24px;
-   font-weight: bold;
- }
- 
- /* Delivery info style */
- .delivery-info {
-   width: 100%;
- }
- 
- .delivery-info-item {
-   margin: 10px 0;
-   font-size: 18px;
- }
- 
- /* Close button style */
- .modal-close-button {
-   padding: 10px 20px;
-   margin-top: 20px;
-   font-size: 16px;
-   background-color: #007bff;
-   color: white;
-   border: none;
-   border-radius: 4px;
-   cursor: pointer;
- }
- .modal-confirm-button {
-   padding: 10px 20px;
-   margin-top: 20px;
-   font-size: 16px;
-   background-color: #00a218;
-   color: white;
-   border: none;
-   border-radius: 4px;
-   cursor: pointer;
- }
- 
- .modal-close-button:hover {
-   background-color: #0056b3;
- }
- 
- /* Loading text style */
- .loading {
-   font-size: 18px;
-   color: #999;
- }
- 
- /* Fade-in animation */
- @keyframes fadeIn {
-   from { opacity: 0; }
-   to { opacity: 1; }
- }
- 
- .my-orders-order .order-delivered {
-  background-color: #0e5beb;
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, 0.75);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/* Modal content style */
+.modal {
+    background: white;
+    padding: 20px;
+    width: 800px;
+    margin: auto;
+    border-radius: 8px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+    animation: fadeIn 0.15s;
+}
+
+.modal-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+/* Modal title style */
+.modal-title {
+    margin-bottom: 20px;
+    font-size: 24px;
+    font-weight: bold;
+}
+
+/* Delivery info style */
+.delivery-info {
+    width: 100%;
+}
+
+.delivery-info-item {
+    margin: 10px 0;
+    font-size: 18px;
+}
+
+/* Modal buttons */
+.modal-confirm-button, .modal-close-button {
+    padding: 10px 20px;
+    margin-top: 20px;
+    font-size: 16px;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.modal-confirm-button {
+    background-color: #00a218;
+}
+
+.modal-confirm-button:hover {
+    background-color: #008e14;
+}
+
+.modal-close-button {
+    background-color: #007bff;
+}
+
+.modal-close-button:hover {
+    background-color: #0056b3;
+}
+
+/* Loading text style */
+.loading {
+    font-size: 18px;
+    color: #999;
+}
+
+/* Fade-in animation */
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
 }
