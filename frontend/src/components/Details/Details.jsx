@@ -6,7 +6,6 @@ const Details = () => {
   return (
     <>
       <h2 className="about-head">Connecting Farmers & Consumers</h2>
-
       <div className="connecting-farmers">
         <div className="desc">
           <img src={assets.leaf} alt="" />

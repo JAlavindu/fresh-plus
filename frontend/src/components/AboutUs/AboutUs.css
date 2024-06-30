@@ -7,37 +7,24 @@
   display: grid;
   grid-template-rows: repeat(1, 600px);
   grid-template-columns: repeat(2, 650px);
-  justify-content: center;
+  justify-items: center;
   margin-top: 50px;
 }
 
-/* .left-side .box1{
-      grid-row: 1/6;
-      grid-column: 1/4;
-      background: #3FC01F;
-  } */
-
-/* .left-side .box2 {
-      grid-area: 1 / 2 / 1 / 1;
-      background: #3FC01F;
-      z-index: 1;
-  } */
-
 .mid .box1 {
   background: #3fc01f;
-  height: 600px;
-  width: 500px;
-  position: relative;
-  top: 0;
-  left: 0;
+  height: 100%;
+  width: 85%;
 }
 .mid .box1 img {
   position: relative;
   top: 50px;
-  left: 50px;
+  left: 10px;
 }
 .mid .box2 {
   align-self: center;
+  display: grid;
+  grid-template-rows: 1fr;
 }
 .mid .box2 h3 {
   font-weight: 500;
@@ -58,19 +45,20 @@
     justify-content: center;
   }
   .mid .box1 {
-    width: 300px;
+    height: 100%;
+    width: 80%;
   }
   .mid .box1 img {
-    position: relative;
-    top: 90px;
-    left: 50px;
+    /* position: relative;
+    top: 0;
+    left: 0; */
     height: 500px;
     width: 500px;
   }
   .mid .box2 {
     justify-self: center;
     margin-top: 90px;
-    width: 80%;
+    width: 60%;
   }
   .mid .box2 h3 {
     font-weight: 500;
@@ -87,37 +75,28 @@
   }
 }
 
-@media (max-width: 1024px) {
+@media (max-width: 430px) {
   .mid {
     display: grid;
     grid-template-rows: repeat(1, 600px);
-    grid-template-columns: repeat(1, 750px);
+    grid-template-columns: repeat(1, 700px);
+    /* align-items: stretch; */
+    justify-content: center;
   }
-  /* .mid .box1 {
-    justify-self: center;
-  } */
+
+  .mid .box1 {
+    height: 100%;
+    width: 80%;
+  }
+
   .mid .box1 img {
-    justify-self: center;
+    width: 100%;
+    height: 100%;
   }
+
   .mid .box2 {
-    align-self: center;
-    margin-top: 30px;
+    justify-self: center;
+    margin-top: 90px;
+    width: 80%;
   }
 }
-
-/* @media (max-width: 425px) {
-  .mid {
-    display: grid;
-    grid-template-rows: repeat(1, 600px);
-    grid-template-columns: repeat(1, 100px);
-    align-items: stretch;
-  }
-
-  .mid .box1 img {
-    justify-self: center;
-  }
-
-  .mid .box2 {
-    justify-self: center;
-  }
-} */

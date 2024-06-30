@@ -1,10 +1,10 @@
 .main {
   background-color: #c9f2c3;
-  margin-top: 200px;
+  margin-top: 30px;
   border-radius: 25px;
 }
 .main .head {
-  /* margin-top: 20px; */
+  margin-top: 60px;
   padding: 10px;
   text-align: center;
 }
@@ -62,7 +62,7 @@
 
 @media (max-width: 750px) {
   .main {
-    margin-top: 900px;
+    margin-top: 30px;
   }
   .how-it-works {
     display: grid;

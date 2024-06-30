@@ -25,10 +25,18 @@ hr {
 
 .app-content {
   display: flex;
+  align-items: flex-start;
 }
 
 .flex-col {
   display: flex;
   flex-direction: column;
   gap: 10px;
+}
+
+@media (max-width: 430px) {
+  .app-content {
+    width: 100%;
+    flex-direction: row;
+  }
 }

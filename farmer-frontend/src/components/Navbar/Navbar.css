@@ -101,3 +101,25 @@
   right: 0;
   z-index: 1;
 }
+
+@media (max-width: 430px) {
+  .navbar-menu li {
+    font-size: 10px;
+  }
+
+  .navbar .logo {
+    width: 40%;
+    margin-right: 10px;
+    /* height: 20%; */
+  }
+
+  .navbar-right .navbar-profile {
+    margin-left: 10px;
+  }
+
+  .navbar p {
+    font-size: 10px;
+    width: 15ch;
+    margin-left: 10px;
+  }
+}

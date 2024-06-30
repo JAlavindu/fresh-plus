@@ -175,31 +175,35 @@ const List = ({ url }) => {
       <div className="list add flex-col">
         <p>All Products</p>
         <div className="list-table">
-          <div className="list-table-format title">
-            <b>Image</b>
-            <b>Name</b>
-            <b>Category</b>
-            <b>Amount</b>
-            <b>Price</b>
-            <b>Action</b>
-          </div>
-          {list.map((item, index) => (
-            <div key={index} className="list-table-format">
-              <img src={`${url}/images/${item.image}`} alt={item.name} />
-              <p>{item.name}</p>
-              <p>{item.category}</p>
-              <p>{item.amount}</p>
-              <p>Rs.{item.price}</p>
-              <div className="actions">
-                <p onClick={() => fetchItem(item._id)} className="cursor">
-                  Edit
-                </p>
-                <p onClick={() => removeItem(item._id)} className="cursor">
-                  Remove
-                </p>
-              </div>
+          <div className="box">
+            <div className="list-table-format title">
+              <b>Image</b>
+              <b>Name</b>
+              <b>Category</b>
+              <b>Amount</b>
+              <b>Price</b>
+              <b>Action</b>
             </div>
-          ))}
+            <>
+              {list.map((item, index) => (
+                <div key={index} className="list-table-format">
+                  <img src={`${url}/images/${item.image}`} alt={item.name} />
+                  <p>{item.name}</p>
+                  <p>{item.category}</p>
+                  <p>{item.amount}</p>
+                  <p>Rs.{item.price}</p>
+                  <div className="actions">
+                    <p onClick={() => fetchItem(item._id)} className="cursor">
+                      Edit
+                    </p>
+                    <p onClick={() => removeItem(item._id)} className="cursor">
+                      Remove
+                    </p>
+                  </div>
+                </div>
+              ))}
+            </>
+          </div>
         </div>
       </div>
 

@@ -5,14 +5,10 @@
 
 .connecting-farmers {
   display: grid;
-  height: 300px;
   grid-template-rows: repeat(2, 200px);
   grid-template-columns: repeat(2, 200px);
-  justify-items: center;
-  align-items: center;
   justify-content: center;
-  margin-bottom: 30px;
-  margin-top: 50px;
+  margin-top: 30px;
   column-gap: 100px;
   row-gap: 60px;
 }
@@ -39,20 +35,24 @@
 @media (max-width: 750px) {
   .connecting-farmers {
     display: grid;
-    grid-template-columns: repeat(1, 200px);
+    grid-template-rows: repeat(2, 200px);
+    grid-template-columns: repeat(1, 300px);
+    row-gap: 20px;
   }
   .connecting-farmers .desc {
-    width: 300px;
-    height: 300px;
+    width: 100%;
+    height: 100%;
     padding: 20px 10px;
-    margin: 30px;
-  }
-  .connecting-farmers {
-    column-gap: 0px;
-    row-gap: 0px;
+    margin: 20px;
   }
   /* .works{
         display: grid;
         grid-template-columns: repeat(1,1fr);
     } */
 }
+
+/* @media (max-width: 430px) {
+  .connecting-farmers {
+    row-gap: 20px;
+  }
+} */

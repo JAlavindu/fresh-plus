@@ -1,34 +1,44 @@
-.header{
-    margin-bottom: 30px;
+.header {
+  margin-bottom: 30px;
 }
 
-.header-contents{
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    align-items: start;
-    gap: 1.5vw;
-    max-width: 50%;
-    margin-top: 30px;
+.header-contents {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: start;
+  gap: 1.5vw;
+  max-width: 50%;
+  margin-top: 30px;
 }
 
 .header-contents h2 {
-    font-weight:800;
-    font-size: max(3vw, 15px);
+  font-weight: 800;
+  font-size: max(3vw, 15px);
 }
 
-.header-contents p{
-    font-size: 1vw;
+.header-contents p {
+  font-size: 1vw;
 }
 
-.header-contents button{
-    border: none;
-    background-color: nonw;
-    color: #747474;
-    font-weight: 500;
-    padding: 1vw 2.3vw;
-    background-color: black;
-    font-size: max(1vw,13px);
-    border-radius: 50px;
-    cursor: pointer;
+.header-contents button {
+  border: none;
+  background-color: nonw;
+  color: #747474;
+  font-weight: 500;
+  padding: 1vw 2.3vw;
+  background-color: black;
+  font-size: max(1vw, 13px);
+  border-radius: 50px;
+  cursor: pointer;
+}
+
+@media (max-width: 430px) {
+  .header-contents h2 {
+    font-size: 5vw;
+    width: 30ch;
+  }
+  .header-contents p {
+    font-size: 3vw;
+  }
 }

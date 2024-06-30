@@ -8,6 +8,7 @@
 }
 body {
   min-height: none;
+  display: grid;
 }
 a {
   text-decoration: none;
@@ -15,6 +16,7 @@ a {
 .app {
   width: 95%;
   margin: auto;
+  justify-self: center;
 }
 @keyframes fadeIn {
   0% {
@@ -29,6 +31,5 @@ a {
   .app {
     width: 95%;
     position: relative;
-    left: 200px;
   }
 }
