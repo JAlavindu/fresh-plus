@@ -232,5 +232,49 @@ const removeAdminSubscription = async (req, res) => {
   }
 };
 
+const getSubscription = async (req, res) => {
+  try {
+      const subscription = await subscriptionModel.findById(req.body.subscriptionId);
 
-export {createSubscription, verifySubscription, userSubscriptions, removeUserSubscription, addSubscription, getAllSubscriptions, adminSubscriptions, removeAdminSubscription}
+      if (subscription) {
+          res.json({ success: true, data: subscription });
+      } else {
+          res.json({ success: false, message: "subscription not found" });
+      }
+      
+  } catch (error) {
+      console.log(error);
+      res.json({success:false, message:"Error"})
+  }
+}
+
+const updateSubscription = async (req, res) => {
+  try {
+    // console.log(req.body);
+    const { subscriptionId, name, description, price, validity, validityDescription } = req.body;
+
+    const subscription = await subscriptionModel.findById(subscriptionId);
+
+    if (!subscription) {
+      return res.status(404).json({ success: false, message: "subscription not found" });
+    }
+
+    // Update item properties
+    subscription.name = name || subscription.name;
+    subscription.description = description || subscription.description;
+    subscription.price = price || subscription.price;
+    subscription.validity = validity || subscription.validity;
+    subscription.validityDescription = validityDescription || subscription.validityDescription;
+
+    // Save the updated subscription to the database
+    await subscription.save();
+
+    res.json({ success: true, message: "subscription updated!" });
+  } catch (error) {
+    console.log(error);
+    res.status(500).json({ success: false, message: "Error updating subscription" });
+  }
+};
+
+
+export {createSubscription, verifySubscription, getSubscription, updateSubscription, userSubscriptions, removeUserSubscription, addSubscription, getAllSubscriptions, adminSubscriptions, removeAdminSubscription}
