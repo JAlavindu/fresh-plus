@@ -1,8 +1,8 @@
-import basket_icon from "./basket_icon.png";
+import basket_icon from "./basket-icon.svg";
 import logo from "./icon+name-horizontal.png";
 // import header_img from './vege.png'
 import header_img from "./Untitled.png";
-import search_icon from "./search_icon.png";
+import search_icon from "./search-icon.svg";
 import menu_1 from "./menu_1.png";
 import menu_2 from "./menu_2.png";
 import menu_3 from "./menu_3.png";
